@@ -11,5 +11,6 @@ add_subdirectory(Plotter)
 ENDIF (WIN32)
 
 IF (UNIX)
+add_subdirectory(Plotter)
 ENDIF (UNIX)
 
