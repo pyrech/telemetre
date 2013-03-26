@@ -11,6 +11,9 @@
 #include "Plotter.h"
 #include "math.h"
 
+#define PLOTTER_CURVE_ID 0
+#define NUMBER_SAMPLE 1000
+
 //#include "qextserialenumerator.h"
 
 class MainWindow : public QWidget{
@@ -25,7 +28,8 @@ public:
 
 
 	MainWindow();
-	void DisplayPort();
+  void DisplayPort();
+  void drawPlotter(float64* data);
 
 
 

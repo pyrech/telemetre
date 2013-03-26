@@ -9,7 +9,7 @@ MainWindow::MainWindow(){
 	
 	//layout the widgets
 	QVBoxLayout *layout = new QVBoxLayout;
-	plotter = new Plotter;	
+	plotter = new Plotter;
 	labelDistance = new QLabel("Distance");
 
 	listePorts = new QComboBox(this);
@@ -22,10 +22,11 @@ MainWindow::MainWindow(){
 	
 	plotter->setPlotSettings(PlotSettings(0,20,-2,2));		
 	
-	for (float i=0;i<20;i+=0.1)
-		data1.append(QPointF(i,sin(i)));
-
-	plotter->setCurveData(0,data1);												
+  /*test*/									
+  float64 data[1000];
+  for (int i=0; i<NUMBER_SAMPLE; i+=1)
+    data[i, sin(i)];
+  this->drawPlotter(data);
 	
 	//layout the widgets
 	
@@ -41,7 +42,7 @@ MainWindow::MainWindow(){
 void MainWindow::DisplayPort(){
 
 
-	/*$QList<QextPortInfo> ports = QextSerialEnumerator::getPorts();
+  /*$QList<QextPortInfo> ports = QextSerialEnumerator::getPorts();
     //! [1]
     std::cout << "List of ports:";
     //! [2]
@@ -56,4 +57,13 @@ void MainWindow::DisplayPort(){
         std::cout << "==================================="<<std::endl;
     }
     */
+}
+
+void MainWindow::drawPlotter(float64& data[]) {
+  data1.erase(data1.begin(), data1.end());
+  plotter->clearCurve(PLOTTER_CURVE_ID);
+  for (int i=0; i<NUMBER_SAMPLE; i+=1)
+    data1.append(QPointF(i, data[i]));
+
+  plotter->setCurveData(PLOTTER_CURVE_ID, data1);     
 }
