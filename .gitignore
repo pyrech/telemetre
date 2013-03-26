@@ -1,5 +1,6 @@
 # cmake
 **/Build/*
+**/build/*
 
 # Sublim Text project files
 sftp-config.json
