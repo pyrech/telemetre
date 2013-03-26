@@ -18,7 +18,9 @@ class MainWindow : public QWidget{
 private: 
 
 	QComboBox *listePorts;
-
+	QVector<QPointF> data1;
+	QLabel *labelDistance;
+	Plotter *plotter;
 public:
 
 

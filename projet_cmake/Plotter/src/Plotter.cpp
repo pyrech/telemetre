@@ -1,7 +1,7 @@
 #include <QtGui>
 #include <cmath>
 
-#include"Plotter.h"
+#include "Plotter.h"
 
 
 /******************************************************* plotter constructor *****************************************************************/

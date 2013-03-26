@@ -5,34 +5,33 @@ MainWindow::MainWindow(){
 
 	// create a window  
 	this->setWindowTitle("PolyTelemetre");
-	this->resize(500,500);
+	this->resize(1000,700);
 	
 	//layout the widgets
 	QVBoxLayout *layout = new QVBoxLayout;
+	plotter = new Plotter;	
+	labelDistance = new QLabel("Distance");
 
 	listePorts = new QComboBox(this);
-	listePorts->addItem("Paris");
-	listePorts->addItem("Londres");
-	listePorts->addItem("Singapour");
-	listePorts->addItem("Tokyo");
+	listePorts->addItem("USB1");
+	listePorts->addItem("USB2");
+	listePorts->addItem("USB3");
+	listePorts->addItem("CD");
 	
 	//create the plotter and its data
-	Plotter *plotter = new Plotter;	
+	
 	plotter->setPlotSettings(PlotSettings(0,20,-2,2));		
 	
-	QVector<QPointF> data1;
 	for (float i=0;i<20;i+=0.1)
 		data1.append(QPointF(i,sin(i)));
-	QVector<QPointF> data2;
-	for (float i=0;i<20;i+=0.1)
-		data2.append(QPointF(i,sin(i/2)));
-	
-	plotter->setCurveData(0,data1);							
-	plotter->setCurveData(1,data2);							
+
+	plotter->setCurveData(0,data1);												
 	
 	//layout the widgets
-	layout->addWidget (plotter);
+	
 	layout->addWidget(listePorts);
+	layout->addWidget(plotter);
+	layout->addWidget(labelDistance);
 	this->setLayout(layout);
 	//show the window
 	this->show();
