@@ -20,12 +20,12 @@ MainWindow::MainWindow(){
 	
 	//create the plotter and its data
 	
-	plotter->setPlotSettings(PlotSettings(0,20,-2,2));		
+	plotter->setPlotSettings(PlotSettings(1,NUMBER_SAMPLE,-2,2));	
 	
   /*test*/									
   float64 data[1000];
   for (int i=0; i<NUMBER_SAMPLE; i+=1)
-    data[i] = sin(i);
+    data[i] = sin(2*M_PI*10*i/NUMBER_SAMPLE);
   this->drawPlotter(data);
 	
 	//layout the widgets
@@ -59,7 +59,7 @@ void MainWindow::DisplayPort(){
     */
 }
 
-void MainWindow::drawPlotter(float64& data[]) {
+void MainWindow::drawPlotter(float64* data) {
   data1.erase(data1.begin(), data1.end());
   plotter->clearCurve(PLOTTER_CURVE_ID);
   for (int i=0; i<NUMBER_SAMPLE; i+=1)

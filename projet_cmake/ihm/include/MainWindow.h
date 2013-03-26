@@ -14,6 +14,7 @@
 #define PLOTTER_CURVE_ID 0
 #define NUMBER_SAMPLE 1000
 
+typedef double float64;
 //#include "qextserialenumerator.h"
 
 class MainWindow : public QWidget{
