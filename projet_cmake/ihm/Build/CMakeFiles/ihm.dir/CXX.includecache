@@ -21,14 +21,16 @@ QComboBox
 -
 QtCore/QList
 -
+QtSerialPort/QSerialPort
+-
+QtSerialPort/QSerialPortInfo
+-
 iostream
 -
 Plotter.h
 ../include/Plotter.h
 math.h
 ../include/math.h
-qextserialenumerator.h
-../include/qextserialenumerator.h
 
 ../include/Plotter.h
 QMap

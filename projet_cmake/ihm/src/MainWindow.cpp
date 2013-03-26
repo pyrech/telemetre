@@ -40,6 +40,7 @@ MainWindow::MainWindow(){
 
 void MainWindow::DisplayPort(){
 
+
 	/*$QList<QextPortInfo> ports = QextSerialEnumerator::getPorts();
     //! [1]
     std::cout << "List of ports:";
