@@ -25,7 +25,7 @@ MainWindow::MainWindow(){
   /*test*/									
   float64 data[1000];
   for (int i=0; i<NUMBER_SAMPLE; i+=1)
-    data[i, sin(i)];
+    data[i] = sin(i);
   this->drawPlotter(data);
 	
 	//layout the widgets
