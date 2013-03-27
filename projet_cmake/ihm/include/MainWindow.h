@@ -1,5 +1,7 @@
 #ifndef MAINWINDOW_H_
 #define MAINWINDOW_H_
+#define _USE_MATH_DEFINES
+#include <cmath>
 #include <string>
 #include <QWidget>
 #include <QLabel>
@@ -9,7 +11,6 @@
 #include <QtCore/QList>
 #include <iostream>
 #include "Plotter.h"
-#include "math.h"
 
 #define PLOTTER_CURVE_ID 0
 #define NUMBER_SAMPLE 1000
