@@ -26,12 +26,21 @@ link_directories(${CMAKE_SOURCE_DIR}/../Plotter/include)
 # MOCing process 
 SET(PROJECT_MOC_CLASSES 
 ${CMAKE_SOURCE_DIR}/include/Plotter.h
+${CMAKE_SOURCE_DIR}/include/MainWindow.h
 )
 QT4_WRAP_CPP(PROJECT_MOC_SOURCES  ${PROJECT_MOC_CLASSES})
 SOURCE_GROUP(moc FILES ${PROJECT_MOC_SOURCES}) 
 
 
-add_executable(${PROJECT_NAME} ${CMAKE_SOURCE_DIR}/src/main.cpp ${CMAKE_SOURCE_DIR}/src/MainWindow.cpp ${CMAKE_SOURCE_DIR}/src/Plotter.cpp ${CMAKE_SOURCE_DIR}/include/Plotter.h ${PROJECT_MOC_SOURCES})
+add_executable(
+${PROJECT_NAME}
+${CMAKE_SOURCE_DIR}/src/main.cpp
+${CMAKE_SOURCE_DIR}/src/MainWindow.cpp
+${CMAKE_SOURCE_DIR}/include/MainWindow.h
+${CMAKE_SOURCE_DIR}/src/Plotter.cpp
+${CMAKE_SOURCE_DIR}/include/Plotter.h
+${PROJECT_MOC_SOURCES}
+)
 
 
 target_link_libraries(${PROJECT_NAME} ${QT_LIBRARIES})

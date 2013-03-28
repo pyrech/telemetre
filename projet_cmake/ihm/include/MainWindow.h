@@ -3,8 +3,11 @@
 #define _USE_MATH_DEFINES
 #include <cmath>
 #include <string>
+#include <QtGui>
 #include <QWidget>
 #include <QLabel>
+#include <QLineEdit>
+#include <QGroupBox>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QComboBox>
@@ -14,24 +17,45 @@
 
 #define PLOTTER_CURVE_ID 0
 #define NUMBER_SAMPLE 1000
+#define MODE_DIRECT 1
+#define MODE_ACQUISITION 2
 
 typedef double float64;
 //#include "qextserialenumerator.h"
 
-class MainWindow : public QWidget{
+class MainWindow : public QWidget {
+	Q_OBJECT
 
 private: 
-
-	QComboBox *listePorts;
-	QVector<QPointF> data1;
-	QLabel *labelDistance;
+	QLabel *acq_label_port;
+	QLabel *dir_label_port;
+	QList<QString> ports_found;
+    //QList<QextPortInfo> ports
+	QComboBox *acq_ports;
+	QComboBox *dir_ports;
+	QLabel *acq_label_distance;
+	QLabel *dir_label_distance;
+	QLineEdit *acq_edit_distance;
+	QLineEdit *dir_edit_distance;
 	Plotter *plotter;
+	QVector<QPointF> acq_data;
+  
+    void updatePortAcq(QString &text);
+    void updatePortDir(QString &text);
+    void fillPort(QComboBox *cur_port, QComboBox *other_port);
+	void drawPlotter();
+	void updateDistance(int mode, QString dist);
+
 public:
-
-
 	MainWindow();
-  void DisplayPort();
-  void drawPlotter(float64* data);
+    //virtual ~MainWindow();
+	void searchPorts();
+	void receiveData(float64* data);
+	void receivePixel(int pixel);
+	
+public slots:
+	void selectedAcqPort(int selected);
+	void selectedDirPort(int selected);
 
 
 
