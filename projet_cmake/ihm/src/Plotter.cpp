@@ -107,7 +107,7 @@ QSize Plotter::sizeHint() const
 
 /***************************************************** plotter Event handlers ****************************************************************/
 //paintEvent simply copies the pixmap onto the widget at position (0,0). the drawing is taken care of in refreshPixmap()
-void Plotter::paintEvent(QPaintEvent */* event */)
+void Plotter::paintEvent(QPaintEvent * /* event */)
 {
     // create a painter
 	QStylePainter painter(this);
@@ -133,7 +133,7 @@ void Plotter::paintEvent(QPaintEvent */* event */)
 
 /*********************************************************************************************************************************************/
 //generated when the Plotter is resized. Qt always generates a resize event before a widget is shown for the first time
-void Plotter::resizeEvent(QResizeEvent */* event */)
+void Plotter::resizeEvent(QResizeEvent * /* event */)
 {
     //reposition the buttons. because no layout is used we have to do this manually
 	int x = width() - (zoomInButton->width()
