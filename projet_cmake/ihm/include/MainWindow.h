@@ -14,6 +14,7 @@
 #include <QtCore/QList>
 #include <iostream>
 #include "Plotter.h"
+#include "Calculator.h"
 
 #define PLOTTER_CURVE_ID 0
 #define NUMBER_SAMPLE 1000
@@ -38,8 +39,10 @@ private:
 	QLineEdit *acq_edit_distance;
 	QLineEdit *dir_edit_distance;
 	Plotter *plotter;
+	Calculator *calculator;
 	QVector<QPointF> acq_data;
-  
+
+	void cleanPointer(void* pointer);
     void updatePortAcq(QString &text);
     void updatePortDir(QString &text);
     void fillPort(QComboBox *cur_port, QComboBox *other_port);
@@ -48,7 +51,7 @@ private:
 
 public:
 	MainWindow();
-    //virtual ~MainWindow();
+    ~MainWindow();
 	void searchPorts();
 	void receiveData(float64* data);
 	void receivePixel(int pixel);

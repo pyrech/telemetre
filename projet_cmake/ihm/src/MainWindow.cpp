@@ -90,23 +90,71 @@ MainWindow::MainWindow() {
 	main_layout->addWidget(dir_group_box);
 	this->setLayout(main_layout);
 
+	// Update ports list
 	this->searchPorts();
 	QString default_port = "";
 	this->updatePortAcq(default_port);
 	this->updatePortDir(default_port);
 
+	// Add signal and slot
 	QObject::connect(acq_ports, SIGNAL(currentIndexChanged(int)), this, SLOT(selectedAcqPort(int)));
 	QObject::connect(dir_ports, SIGNAL(currentIndexChanged(int)), this, SLOT(selectedDirPort(int)));
+
+	// Init the calculator
+	this->calculator = new Calculator();
 
 	/*test*/
 	float64 data[1000];
 	for (int i=0; i<NUMBER_SAMPLE; i+=1)
 	data[i] = sin(2*M_PI*10*i/NUMBER_SAMPLE);
 	this->receiveData(data);
-	this->receivePixel(50);
+	this->receivePixel(-1);
 	
 	// Show the window
 	this->show();
+}
+
+MainWindow::~MainWindow() {
+	if (acq_label_port != NULL) {
+		delete(acq_label_port);
+		acq_label_port = NULL;
+	}
+	if (dir_label_port != NULL) {
+		delete(dir_label_port);
+		dir_label_port = NULL;
+	}
+	if (acq_ports != NULL) {
+		delete(acq_ports);
+		acq_ports = NULL;
+	}
+	if (dir_ports != NULL) {
+		delete(dir_ports);
+		dir_ports = NULL;
+	}
+	if (acq_label_distance != NULL) {
+		delete(acq_label_distance);
+		acq_label_distance = NULL;
+	}
+	if (dir_label_distance != NULL) {
+		delete(dir_label_distance);
+		dir_label_distance = NULL;
+	}
+	if (acq_edit_distance != NULL) {
+		delete(acq_edit_distance);
+		acq_edit_distance = NULL;
+	}
+	if (dir_edit_distance != NULL) {
+		delete(dir_edit_distance);
+		dir_edit_distance = NULL;
+	}
+	if (plotter != NULL) {
+		delete(plotter);
+		plotter = NULL;
+	}
+	if (calculator != NULL) {
+		delete(calculator);
+		calculator = NULL;
+	}
 }
 
 void MainWindow::searchPorts() {
@@ -188,15 +236,17 @@ void MainWindow::receiveData(float64* data) {
     acq_data.append(QPointF(i, data[i]));
   }
   this->drawPlotter();
-  int pixel = 500;
-  QString dist = "10 m";
-  // pixel = this->calculator->getPixel(acq_data);
-  // dist = this->calculator->getDist(pixel);
+  int pixel = -1;
+  QString dist = "NC";
+  pixel = this->calculator->getPixel(acq_data);
+  dist = this->calculator->getDist(pixel);
   this->updateDistance(MODE_ACQUISITION, dist);
 }
 
 void MainWindow::receivePixel(int pixel) {
-  QString dist = "15 m";
-  //dist = this->calculator->getDist(pixel);
+  QString dist = "NC";
+  if (pixel >= 0) {
+	dist = this->calculator->getDist(pixel);
+  }
   this->updateDistance(MODE_DIRECT, dist);
 }

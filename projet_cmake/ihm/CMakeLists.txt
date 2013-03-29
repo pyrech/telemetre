@@ -37,6 +37,8 @@ ${PROJECT_NAME}
 ${CMAKE_SOURCE_DIR}/src/main.cpp
 ${CMAKE_SOURCE_DIR}/src/MainWindow.cpp
 ${CMAKE_SOURCE_DIR}/include/MainWindow.h
+${CMAKE_SOURCE_DIR}/src/Calculator.cpp
+${CMAKE_SOURCE_DIR}/include/Calculator.h
 ${CMAKE_SOURCE_DIR}/src/Plotter.cpp
 ${CMAKE_SOURCE_DIR}/include/Plotter.h
 ${PROJECT_MOC_SOURCES}
