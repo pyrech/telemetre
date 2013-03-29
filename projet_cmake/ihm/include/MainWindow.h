@@ -18,11 +18,14 @@
 
 
 #define PLOTTER_CURVE_ID 0
-#define NUMBER_SAMPLE 1000
+#define MAX_PIXEL 2048
 #define MODE_DIRECT 1
 #define MODE_ACQUISITION 2
-#define MAX_PIXEL 2048
-#define DISTANCE_DECIMAL 2
+#define FOCUS_UNIT 0.001
+#define GAP_UNIT 0.001
+#define PIXEL_UNIT 0.000001
+#define MIN_PIC_VALUE 1
+#define THRESHOLD_PIC_PERCENT 10
 
 typedef double float64;
 //#include "qextserialenumerator.h"

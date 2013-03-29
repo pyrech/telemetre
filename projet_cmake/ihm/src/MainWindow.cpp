@@ -22,7 +22,7 @@ MainWindow::MainWindow() {
 	conf_edit_focus = new QLineEdit;
 	conf_edit_focus->setFixedWidth(50);
 	conf_edit_focus->setValidator(new QDoubleValidator(0, 100, 2, this));
-	conf_edit_focus->setText("100");
+	conf_edit_focus->setText("110");
 	conf_label_focus->setBuddy(conf_edit_focus);
 	
 	// Configuration - Focus Layout
@@ -89,7 +89,7 @@ MainWindow::MainWindow() {
 
 	// Acquisition - Plotter
 	plotter = new Plotter;
-	plotter->setPlotSettings(PlotSettings(1,NUMBER_SAMPLE,-2,2));
+	plotter->setPlotSettings(PlotSettings(1,MAX_PIXEL,-2,2));
 
 	// Acquisition - Layout (ports, distance, plotter)
 	QVBoxLayout *acq_layout = new QVBoxLayout;
@@ -159,11 +159,14 @@ MainWindow::MainWindow() {
 	this->calculator = new Calculator(this);
 
 	/*test*/
-	float64 data[1000];
-	for (int i=0; i<NUMBER_SAMPLE; i+=1)
-	data[i] = sin(2*M_PI*10*i/NUMBER_SAMPLE);
+	int pixel = 1333;
+	double sigma = 0.7;
+	float64 data[MAX_PIXEL];
+	for (int i=0; i<MAX_PIXEL; i+=1) {
+		data[i] = 5*(1/(sigma*sqrt(2*M_PI)))*exp(-(pow((double)i-pixel+1, 2))/(2*pow(sigma, 2)));
+	}
 	this->receiveData(data);
-	this->receivePixel(-1);
+	this->receivePixel(pixel);
 	
 	// Show the window
 	this->show();
@@ -281,16 +284,16 @@ void MainWindow::updateDistance(int mode, QString dist) {
 }
 
 void MainWindow::receiveData(float64* data) {
-  acq_data.erase(acq_data.begin(), acq_data.end());
-  plotter->clearCurve(PLOTTER_CURVE_ID);
-  for (int i=0; i<NUMBER_SAMPLE; i+=1) {
-    acq_data.append(QPointF(i, data[i]));
-  }
-  this->drawPlotter();
-  int pixel = 0;
-  QString dist = "NC";
-  pixel = this->calculator->getPixel(acq_data);
-  dist = this->calculator->getDist(pixel);
+	acq_data.erase(acq_data.begin(), acq_data.end());
+	plotter->clearCurve(PLOTTER_CURVE_ID);
+	for (int i=0; i<MAX_PIXEL; i+=1) {
+		acq_data.append(QPointF(i+1, data[i]));
+	}
+	this->drawPlotter();
+	int pixel = 0;
+	QString dist = "NC";
+	pixel = this->calculator->getPixel(data);
+	dist = this->calculator->getDist(pixel);
   this->updateDistance(MODE_ACQUISITION, dist);
 }
 

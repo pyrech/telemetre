@@ -14,14 +14,16 @@ class Calculator {
 
 private:
 	MainWindow *parent;
-    QString distWithUnit(double dist, QString unit);
+    QString distWithUnit(double dist, short precision, QString unit);
+	void detectPic(float64* data, int &start, int &end);
+	float64 max(float64* data);
 
 public:
 	Calculator(MainWindow *_parent);
-	int getPixel(QVector<QPointF> data);
+	int getPixel(float64* data);
 	QString getDist(int pixel);
 	QString distToStr(double dist);
-
+	int round(double d);
 };
 
 #endif 
