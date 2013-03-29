@@ -1,4 +1,5 @@
 #include "MainWindow.h"
+#include "Calculator.h"
 
 
 MainWindow::MainWindow() {
@@ -155,7 +156,7 @@ MainWindow::MainWindow() {
 	QObject::connect(dir_ports, SIGNAL(currentIndexChanged(int)), this, SLOT(selectedDirPort(int)));
 
 	// Init the calculator
-	this->calculator = new Calculator();
+	this->calculator = new Calculator(this);
 
 	/*test*/
 	float64 data[1000];
@@ -286,7 +287,7 @@ void MainWindow::receiveData(float64* data) {
     acq_data.append(QPointF(i, data[i]));
   }
   this->drawPlotter();
-  int pixel = -1;
+  int pixel = 0;
   QString dist = "NC";
   pixel = this->calculator->getPixel(acq_data);
   dist = this->calculator->getDist(pixel);
@@ -295,7 +296,7 @@ void MainWindow::receiveData(float64* data) {
 
 void MainWindow::receivePixel(int pixel) {
   QString dist = "NC";
-  if (pixel >= 0) {
+  if (pixel > 0) {
 	dist = this->calculator->getDist(pixel);
   }
   this->updateDistance(MODE_DIRECT, dist);

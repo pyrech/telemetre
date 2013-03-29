@@ -6,18 +6,21 @@
 #include <iostream>
 #include <QtGui>
 #include <QtCore/QList>
+#include "MainWindow.h"
 
 typedef double float64;
 
 class Calculator {
 
-private: 
+private:
+	MainWindow *parent;
+    QString distWithUnit(double dist, QString unit);
 
 public:
-
-  Calculator();
-  int getPixel(QVector<QPointF> data);
-  QString getDist(int pixel);
+	Calculator(MainWindow *_parent);
+	int getPixel(QVector<QPointF> data);
+	QString getDist(int pixel);
+	QString distToStr(double dist);
 
 };
 

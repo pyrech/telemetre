@@ -15,15 +15,19 @@
 #include <QDoubleValidator>
 #include <iostream>
 #include "Plotter.h"
-#include "Calculator.h"
+
 
 #define PLOTTER_CURVE_ID 0
 #define NUMBER_SAMPLE 1000
 #define MODE_DIRECT 1
 #define MODE_ACQUISITION 2
+#define MAX_PIXEL 2048
+#define DISTANCE_DECIMAL 2
 
 typedef double float64;
 //#include "qextserialenumerator.h"
+
+class Calculator;
 
 class MainWindow : public QWidget {
 	Q_OBJECT
