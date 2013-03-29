@@ -12,6 +12,7 @@
 #include <QHBoxLayout>
 #include <QComboBox>
 #include <QtCore/QList>
+#include <QDoubleValidator>
 #include <iostream>
 #include "Plotter.h"
 #include "Calculator.h"
@@ -27,15 +28,14 @@ typedef double float64;
 class MainWindow : public QWidget {
 	Q_OBJECT
 
-private: 
-	QLabel *acq_label_port;
-	QLabel *dir_label_port;
+private:
+	QLineEdit *conf_edit_focus;
+	QLineEdit *conf_edit_gap;
+	QLineEdit *conf_edit_pixel;
 	QList<QString> ports_found;
     //QList<QextPortInfo> ports
 	QComboBox *acq_ports;
 	QComboBox *dir_ports;
-	QLabel *acq_label_distance;
-	QLabel *dir_label_distance;
 	QLineEdit *acq_edit_distance;
 	QLineEdit *dir_edit_distance;
 	Plotter *plotter;
@@ -58,8 +58,9 @@ public:
 public slots:
 	void selectedAcqPort(int selected);
 	void selectedDirPort(int selected);
-
-
+	float getAxesGap();
+	float getPixelWidth();
+	float getLensFocus();
 
 };
 

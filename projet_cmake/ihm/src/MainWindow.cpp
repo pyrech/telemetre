@@ -16,8 +16,57 @@ MainWindow::MainWindow() {
 	closeButton = new QPushButton(tr("Close"));
 	*/
 
+	// Configuration - Focus
+	QLabel *conf_label_focus = new QLabel(tr("Foyer (mm) :"));
+	conf_edit_focus = new QLineEdit;
+	conf_edit_focus->setFixedWidth(50);
+	conf_edit_focus->setValidator(new QDoubleValidator(0, 100, 2, this));
+	conf_edit_focus->setText("100");
+	conf_label_focus->setBuddy(conf_edit_focus);
+	
+	// Configuration - Focus Layout
+	QHBoxLayout *conf_focus_layout = new QHBoxLayout;
+	conf_focus_layout->addWidget(conf_label_focus);
+	conf_focus_layout->addWidget(conf_edit_focus);
+
+	// Configuration - Gap
+	QLabel *conf_label_gap= new QLabel(tr("Ecart axes (mm) :"));
+	conf_edit_gap = new QLineEdit;
+	conf_edit_gap->setFixedWidth(50);
+	conf_edit_gap->setValidator(new QDoubleValidator(0, 100, 2, this));
+	conf_edit_gap->setText("50");
+	conf_label_gap->setBuddy(conf_edit_gap);
+	
+	// Configuration - Gap Layout
+	QHBoxLayout *conf_gap_layout = new QHBoxLayout;
+	conf_gap_layout->addWidget(conf_label_gap);
+	conf_gap_layout->addWidget(conf_edit_gap);
+	
+	// Configuration - Pixel
+	QLabel *conf_label_pixel = new QLabel(tr("Largeur pixel (µm) :"));
+	conf_edit_pixel = new QLineEdit;
+	conf_edit_pixel->setFixedWidth(50);
+	conf_edit_pixel->setValidator(new QDoubleValidator(0, 100, 2, this));
+	conf_edit_pixel->setText("14");
+	conf_label_pixel->setBuddy(conf_edit_pixel);
+	
+	// Configuration - Pixel Layout
+	QHBoxLayout *conf_pixel_layout = new QHBoxLayout;
+	conf_pixel_layout->addWidget(conf_label_pixel);
+	conf_pixel_layout->addWidget(conf_edit_pixel);
+
+	// Configuration - Main layout
+	QHBoxLayout *conf_layout = new QHBoxLayout;
+	conf_layout->addLayout(conf_focus_layout);
+	conf_layout->addLayout(conf_gap_layout);
+	conf_layout->addLayout(conf_pixel_layout);
+	
+	// Configuration - Group box
+	QGroupBox *conf_group_box = new QGroupBox(tr("Configuration"));
+	conf_group_box->setLayout(conf_layout);
+
 	// Acquisition - ports
-	acq_label_port = new QLabel(tr("Port :"));
+	QLabel *acq_label_port = new QLabel(tr("Port :"));
 	acq_ports = new QComboBox(this);
 	acq_label_port->setBuddy(acq_ports);
 	
@@ -27,7 +76,7 @@ MainWindow::MainWindow() {
 	acq_top_port_layout->addWidget(acq_ports);
 
 	// Acquisition - distance
-	acq_label_distance = new QLabel(tr("Distance :"));
+	QLabel *acq_label_distance = new QLabel(tr("Distance :"));
 	acq_edit_distance = new QLineEdit;
 	acq_edit_distance->setReadOnly(true);
 	acq_label_distance->setBuddy(acq_edit_distance);
@@ -54,7 +103,7 @@ MainWindow::MainWindow() {
 	acq_group_box->setLayout(acq_layout);
 
 	// Direct - ports
-	dir_label_port = new QLabel(tr("Port :"));
+	QLabel *dir_label_port = new QLabel(tr("Port :"));
 	dir_ports = new QComboBox(this);
 	dir_label_port->setBuddy(dir_ports);
 	
@@ -64,7 +113,7 @@ MainWindow::MainWindow() {
 	dir_top_port_layout->addWidget(dir_ports);
 
 	// Direct - distance
-	dir_label_distance = new QLabel(tr("Distance :"));
+	QLabel *dir_label_distance = new QLabel(tr("Distance :"));
 	dir_edit_distance = new QLineEdit;
 	dir_edit_distance->setReadOnly(true);
 	dir_label_distance->setBuddy(dir_edit_distance);
@@ -84,10 +133,15 @@ MainWindow::MainWindow() {
 	QGroupBox *dir_group_box = new QGroupBox(tr("Microcontroleur"));
 	dir_group_box->setLayout(dir_layout);
 
-	// Main layout (acquisition and direct)
-	QHBoxLayout *main_layout = new QHBoxLayout;
-	main_layout->addWidget(acq_group_box);
-	main_layout->addWidget(dir_group_box);
+	// Mesure layout (acquisition and direct)
+	QHBoxLayout *mesure_layout = new QHBoxLayout;
+	mesure_layout->addWidget(acq_group_box);
+	mesure_layout->addWidget(dir_group_box);
+
+	// Main layout (configuration and mesure)
+	QVBoxLayout *main_layout = new QVBoxLayout;
+	main_layout->addWidget(conf_group_box);
+	main_layout->addLayout(mesure_layout);
 	this->setLayout(main_layout);
 
 	// Update ports list
@@ -115,13 +169,17 @@ MainWindow::MainWindow() {
 }
 
 MainWindow::~MainWindow() {
-	if (acq_label_port != NULL) {
-		delete(acq_label_port);
-		acq_label_port = NULL;
+	if (conf_edit_focus != NULL) {
+		delete(conf_edit_focus);
+		conf_edit_focus = NULL;
 	}
-	if (dir_label_port != NULL) {
-		delete(dir_label_port);
-		dir_label_port = NULL;
+	if (conf_edit_gap != NULL) {
+		delete(conf_edit_gap);
+		conf_edit_gap = NULL;
+	}
+	if (conf_edit_pixel != NULL) {
+		delete(conf_edit_pixel);
+		conf_edit_pixel = NULL;
 	}
 	if (acq_ports != NULL) {
 		delete(acq_ports);
@@ -130,14 +188,6 @@ MainWindow::~MainWindow() {
 	if (dir_ports != NULL) {
 		delete(dir_ports);
 		dir_ports = NULL;
-	}
-	if (acq_label_distance != NULL) {
-		delete(acq_label_distance);
-		acq_label_distance = NULL;
-	}
-	if (dir_label_distance != NULL) {
-		delete(dir_label_distance);
-		dir_label_distance = NULL;
 	}
 	if (acq_edit_distance != NULL) {
 		delete(acq_edit_distance);
@@ -249,4 +299,16 @@ void MainWindow::receivePixel(int pixel) {
 	dist = this->calculator->getDist(pixel);
   }
   this->updateDistance(MODE_DIRECT, dist);
+}
+
+float MainWindow::getAxesGap() {
+	return this->conf_edit_gap->text().toFloat();
+}
+
+float MainWindow::getPixelWidth() {
+	return this->conf_edit_pixel->text().toFloat();
+}
+
+float MainWindow::getLensFocus() {
+	return this->conf_edit_focus->text().toFloat();
 }
