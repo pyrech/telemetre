@@ -42,7 +42,6 @@ private:
 	Calculator *calculator;
 	QVector<QPointF> acq_data;
 
-	void cleanPointer(void* pointer);
     void updatePortAcq(QString &text);
     void updatePortDir(QString &text);
     void fillPort(QComboBox *cur_port, QComboBox *other_port);
