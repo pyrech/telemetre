@@ -156,7 +156,7 @@ MainWindow::MainWindow() {
 	QObject::connect(acq_ports, SIGNAL(currentIndexChanged(int)), this, SLOT(selectedAcqPort(int)));
 	QObject::connect(dir_ports, SIGNAL(currentIndexChanged(int)), this, SLOT(selectedDirPort(int)));
 
-	// Init the calculator ans acquisitor
+	// Init the calculator and acquisitor
 	this->calculator = new Calculator(this);
 	this->acquisitor = new Acquisitor(this);
 
