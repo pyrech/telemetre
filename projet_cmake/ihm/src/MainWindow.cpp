@@ -1,5 +1,6 @@
 #include "MainWindow.h"
 #include "Calculator.h"
+#include "Acquisitor.h"
 
 
 MainWindow::MainWindow() {
@@ -155,8 +156,9 @@ MainWindow::MainWindow() {
 	QObject::connect(acq_ports, SIGNAL(currentIndexChanged(int)), this, SLOT(selectedAcqPort(int)));
 	QObject::connect(dir_ports, SIGNAL(currentIndexChanged(int)), this, SLOT(selectedDirPort(int)));
 
-	// Init the calculator
+	// Init the calculator ans acquisitor
 	this->calculator = new Calculator(this);
+	this->acquisitor = new Acquisitor(this);
 
 	/*test*/
 	int pixel = 1333;

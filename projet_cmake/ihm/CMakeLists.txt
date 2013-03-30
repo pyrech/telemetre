@@ -27,6 +27,7 @@ link_directories(${CMAKE_SOURCE_DIR}/../Plotter/include)
 SET(PROJECT_MOC_CLASSES 
 ${CMAKE_SOURCE_DIR}/include/Plotter.h
 ${CMAKE_SOURCE_DIR}/include/MainWindow.h
+${CMAKE_SOURCE_DIR}/include/Acquisitor.h
 )
 QT4_WRAP_CPP(PROJECT_MOC_SOURCES  ${PROJECT_MOC_CLASSES})
 SOURCE_GROUP(moc FILES ${PROJECT_MOC_SOURCES}) 
@@ -39,6 +40,8 @@ ${CMAKE_SOURCE_DIR}/src/MainWindow.cpp
 ${CMAKE_SOURCE_DIR}/include/MainWindow.h
 ${CMAKE_SOURCE_DIR}/src/Calculator.cpp
 ${CMAKE_SOURCE_DIR}/include/Calculator.h
+${CMAKE_SOURCE_DIR}/src/Acquisitor.cpp
+${CMAKE_SOURCE_DIR}/include/Acquisitor.h
 ${CMAKE_SOURCE_DIR}/src/Plotter.cpp
 ${CMAKE_SOURCE_DIR}/include/Plotter.h
 ${PROJECT_MOC_SOURCES}

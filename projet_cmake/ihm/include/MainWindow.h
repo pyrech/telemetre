@@ -31,6 +31,7 @@ typedef double float64;
 //#include "qextserialenumerator.h"
 
 class Calculator;
+class Acquisitor;
 
 class MainWindow : public QWidget {
 	Q_OBJECT
@@ -47,6 +48,7 @@ private:
 	QLineEdit *dir_edit_distance;
 	Plotter *plotter;
 	Calculator *calculator;
+	Acquisitor *acquisitor;
 	QVector<QPointF> acq_data;
 
     void updatePortAcq(QString &text);
