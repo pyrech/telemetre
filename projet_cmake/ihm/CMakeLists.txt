@@ -18,10 +18,10 @@ LINK_DIRECTORIES ("C:\\Program Files (x86)\\National Instruments\\NI-DAQ\\DAQmx 
 ENDIF (WIN32)
 
 # console suppression for windows based applications
-#IF(WIN32)
-#LINK_LIBRARIES(${QT_QTMAIN_LIBRARY})
-#ADD_DEFINITIONS (-DQT_DLL)
-#ENDIF (WIN32)
+IF(WIN32)
+LINK_LIBRARIES(${QT_QTMAIN_LIBRARY})
+ADD_DEFINITIONS (-DQT_DLL)
+ENDIF (WIN32)
 
 # C++ Project Include
 INCLUDE_DIRECTORIES(
@@ -47,17 +47,20 @@ ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/src/main.cpp
 ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/src/MainWindow.cpp
 ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/src/Calculator.cpp
 ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/src/Acquisitor.cpp
+${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/src/Plotter.cpp
 
 # Project headers
 ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/include/MainWindow.h
 ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/include/Calculator.h
 ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/include/Acquisitor.h
+${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/include/Plotter.h
 )
 
 # MOCing process 
 SET(PROJECT_MOC_CLASSES
 ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/include/MainWindow.h
 ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/include/Acquisitor.h
+${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/include/Plotter.h
 )
 
 QT4_WRAP_CPP(PROJECT_MOC_SOURCES  ${PROJECT_MOC_CLASSES})
