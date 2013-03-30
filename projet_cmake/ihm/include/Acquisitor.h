@@ -6,8 +6,10 @@
 #include <QtCore/QList>
 #include "MainWindow.h"
 
+#ifdef WIN32
 #include <stdio.h>
 #include <NIDAQmx.h>
+#endif
 
 #define DAQmxErrChk(functionCall) if( DAQmxFailed(error=(functionCall)) ) goto Error; else
 
