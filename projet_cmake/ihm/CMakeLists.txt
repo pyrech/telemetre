@@ -3,36 +3,69 @@ cmake_minimum_required(VERSION 2.8)
 project(ihm)
 SET(PROJECT_NAME ihm)
 
-find_package(Qt4 REQUIRED)
-include(${QT_USE_FILE})
+# For Qt4 usage 
+FIND_PACKAGE(Qt4 REQUIRED)
+INCLUDE(${QT_USE_FILE})
 INCLUDE_DIRECTORIES(${QT_INCLUDE_DIR})
 LINK_DIRECTORIES (${QT_LIBRARIES})
 ADD_DEFINITIONS(${QT_DEFINITIONS})
 
-include_directories(include)
-#link_directories(include)
+# For NIDAQ
+IF(WIN32)
+INCLUDE_DIRECTORIES("C:\\Program Files (x86)\\National Instruments\\NI-DAQ\\DAQmx ANSI C Dev\\include")
+LINK_DIRECTORIES("C:\\Program Files (x86)\\National Instruments\\NI-DAQ\\DAQmx ANSI C Dev\\lib\\msvc")
+ENDIF (WIN32)
 
-#include_directories(${CMAKE_SOURCE_DIR}/../qextserialport/src)
-#link_directories(${CMAKE_SOURCE_DIR}/../qextserialport/src)
+# TO UPDATE BY Romain
+#INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/../qextserialport/src)
+#LINK_DIRECTORIES(${CMAKE_SOURCE_DIR}/../qextserialport/src)
+#INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/../Plotter/include)
+#LINK_DIRECTORIES(${CMAKE_SOURCE_DIR}/../Plotter/include)
 
-include_directories(${CMAKE_SOURCE_DIR}/../Plotter/include)
-link_directories(${CMAKE_SOURCE_DIR}/../Plotter/include)
+# Project Include
+INCLUDE_DIRECTORIES(
+${CMAKE_SOURCE_DIR}/include
+#${CMAKE_SOURCE_DIR}/Plotter/include
+)
 
+SET(PROJECT_SOURCES
+# Project sources
+${CMAKE_SOURCE_DIR}/src/main.cpp
+${CMAKE_SOURCE_DIR}/src/MainWindow.cpp
+${CMAKE_SOURCE_DIR}/src/Calculator.cpp
+${CMAKE_SOURCE_DIR}/src/Acquisitor.cpp
+${CMAKE_SOURCE_DIR}/src/Plotter.cpp
 
-
-#${CMAKE_SOURCE_DIR}/../Plotter/src/Plotter.cpp
-
-
-# MOCing process 
-SET(PROJECT_MOC_CLASSES 
+# Project headers
+${CMAKE_SOURCE_DIR}/include/MainWindow.h
+${CMAKE_SOURCE_DIR}/include/Calculator.h
+${CMAKE_SOURCE_DIR}/include/Acquisitor.h
 ${CMAKE_SOURCE_DIR}/include/Plotter.h
 )
+
+# MOCing process 
+SET(PROJECT_MOC_CLASSES
+${CMAKE_SOURCE_DIR}/include/MainWindow.h
+${CMAKE_SOURCE_DIR}/include/Acquisitor.h
+${CMAKE_SOURCE_DIR}/include/Plotter.h
+)
+ 
 QT4_WRAP_CPP(PROJECT_MOC_SOURCES  ${PROJECT_MOC_CLASSES})
-SOURCE_GROUP(moc FILES ${PROJECT_MOC_SOURCES}) 
+SOURCE_GROUP(moc FILES ${PROJECT_MOC_SOURCES})
 
+# Compilation and installation
+IF(WIN32)
+ADD_EXECUTABLE(${PROJECT_NAME} ${PROJECT_SOURCES} ${PROJECT_MOC_SOURCES})
+TARGET_LINK_LIBRARIES(${PROJECT_NAME} 
+${QT_LIBRARIES} NIDAQmx
+)
+ENDIF (WIN32)
+ 
+IF (UNIX)
+ADD_EXECUTABLE(${PROJECT_NAME} ${PROJECT_SOURCES} ${PROJECT_MOC_SOURCES})
+TARGET_LINK_LIBRARIES(${PROJECT_NAME} 
+${QT_LIBRARIES}
+)
+ENDIF (UNIX)
 
-add_executable(${PROJECT_NAME} ${CMAKE_SOURCE_DIR}/src/main.cpp ${CMAKE_SOURCE_DIR}/src/MainWindow.cpp ${CMAKE_SOURCE_DIR}/src/Plotter.cpp ${CMAKE_SOURCE_DIR}/include/Plotter.h ${PROJECT_MOC_SOURCES})
-
-
-target_link_libraries(${PROJECT_NAME} ${QT_LIBRARIES})
-install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION ${CMAKE_SOURCE_DIR}/bin/)
+INSTALL(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION ${CMAKE_SOURCE_DIR}/bin )
