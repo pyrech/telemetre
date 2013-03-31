@@ -42,7 +42,6 @@ private:
 	QLineEdit *conf_edit_pixel;
 	QList<QString> ports_found;
     //QList<QextPortInfo> ports
-	QComboBox *acq_ports;
 	QComboBox *dir_ports;
 	QLineEdit *acq_edit_distance;
 	QLineEdit *dir_edit_distance;
@@ -51,9 +50,7 @@ private:
 	Acquisitor *acquisitor;
 	QVector<QPointF> acq_data;
 
-    void updatePortAcq(QString &text);
     void updatePortDir(QString &text);
-    void fillPort(QComboBox *cur_port, QComboBox *other_port);
 	void drawPlotter();
 	void updateDistance(int mode, QString dist);
 
@@ -63,13 +60,12 @@ public:
 	void searchPorts();
 	void receiveData(float64* data);
 	void receivePixel(int pixel);
-	
-public slots:
-	void selectedAcqPort(int selected);
-	void selectedDirPort(int selected);
 	float getAxesGap();
 	float getPixelWidth();
 	float getLensFocus();
+	
+public slots:
+	void selectedDirPort(int selected);
 
 };
 

@@ -67,16 +67,6 @@ MainWindow::MainWindow() {
 	QGroupBox *conf_group_box = new QGroupBox(tr("Configuration"));
 	conf_group_box->setLayout(conf_layout);
 
-	// Acquisition - ports
-	QLabel *acq_label_port = new QLabel(tr("Port :"));
-	acq_ports = new QComboBox(this);
-	acq_label_port->setBuddy(acq_ports);
-	
-	// Acquisition - Top layout (ports)
-	QHBoxLayout *acq_top_port_layout = new QHBoxLayout;
-	acq_top_port_layout->addWidget(acq_label_port);
-	acq_top_port_layout->addWidget(acq_ports);
-
 	// Acquisition - distance
 	QLabel *acq_label_distance = new QLabel(tr("Distance :"));
 	acq_edit_distance = new QLineEdit;
@@ -92,10 +82,9 @@ MainWindow::MainWindow() {
 	plotter = new Plotter;
 	plotter->setPlotSettings(PlotSettings(1,MAX_PIXEL,-2,2));
 
-	// Acquisition - Layout (ports, distance, plotter)
+	// Acquisition - Layout (distance, plotter)
 	QVBoxLayout *acq_layout = new QVBoxLayout;
     acq_layout->setAlignment(Qt::AlignTop);
-	acq_layout->addLayout(acq_top_port_layout);
 	acq_layout->addLayout(acq_top_dist_layout);
 	acq_layout->addStretch();
 	acq_layout->addWidget(plotter);
@@ -149,11 +138,9 @@ MainWindow::MainWindow() {
 	// Update ports list
 	this->searchPorts();
 	QString default_port = "";
-	this->updatePortAcq(default_port);
 	this->updatePortDir(default_port);
 
 	// Add signal and slot
-	QObject::connect(acq_ports, SIGNAL(currentIndexChanged(int)), this, SLOT(selectedAcqPort(int)));
 	QObject::connect(dir_ports, SIGNAL(currentIndexChanged(int)), this, SLOT(selectedDirPort(int)));
 
 	// Init the calculator and acquisitor
@@ -162,10 +149,10 @@ MainWindow::MainWindow() {
 
 	/*test*/
 	int pixel = 1333;
-	double sigma = 0.7;
+	double sigma = 20;
 	float64 data[MAX_PIXEL];
 	for (int i=0; i<MAX_PIXEL; i+=1) {
-		data[i] = 5*(1/(sigma*sqrt(2*M_PI)))*exp(-(pow((double)i-pixel+1, 2))/(2*pow(sigma, 2)));
+		data[i] = 100*(1/(sigma*sqrt(2*M_PI)))*exp(-(pow((double)i-pixel+1, 2))/(2*pow(sigma, 2)));
 	}
 	this->receiveData(data);
 	this->receivePixel(pixel);
@@ -186,10 +173,6 @@ MainWindow::~MainWindow() {
 	if (conf_edit_pixel != NULL) {
 		delete(conf_edit_pixel);
 		conf_edit_pixel = NULL;
-	}
-	if (acq_ports != NULL) {
-		delete(acq_ports);
-		acq_ports = NULL;
 	}
 	if (dir_ports != NULL) {
 		delete(dir_ports);
@@ -220,25 +203,7 @@ void MainWindow::searchPorts() {
 	ports_found.append("USB4");
 	ports_found.append("CD");
 	//ports_found = QextSerialEnumerator::getPorts();
-}
 
-void MainWindow::updatePortAcq(QString &text) {
-	this->fillPort(acq_ports, dir_ports);
-}
-
-void MainWindow::updatePortDir(QString &text) {
-	this->fillPort(dir_ports, acq_ports);
-}
-
-void MainWindow::fillPort(QComboBox *cur_port, QComboBox *other_port) {
-	QString port_selected = other_port->currentText();
-	cur_port->clear();
-	cur_port->addItem("");
-    foreach (QString port, ports_found) {
-		if (port_selected != port) {
-			cur_port->addItem(port);
-		}
-	}
     /*std::cout << "List of ports:";
     foreach (QextPortInfo info, ports_found) {
         std::cout << "port name:"       << info.portName.toStdString();
@@ -249,23 +214,26 @@ void MainWindow::fillPort(QComboBox *cur_port, QComboBox *other_port) {
         std::cout << "product ID:"      << info.productID;
 
         std::cout << "==================================="<<std::endl;
-	}
-    */
+	}*/
 }
 
-void MainWindow::selectedAcqPort(int selected) {
-	QString dir_port_selected = dir_ports->currentText();
-	if (selected == 0) {
-		// disabled some fields ?
+void MainWindow::updatePortDir(QString &text) {
+	dir_ports->clear();
+	dir_ports->addItem("");
+    foreach (QString port, ports_found) {
+		dir_ports->addItem(port);
 	}
-	this->updatePortDir(dir_port_selected);
+	int index = dir_ports->findText(text);
+	if(index != -1) {
+		dir_ports->setCurrentIndex(index);
+	}
 }
+
 void MainWindow::selectedDirPort(int selected) {
-	QString acq_port_selected = acq_ports->currentText();
 	if (selected == 0) {
 		// disabled some fields ?
 	}
-	this->updatePortAcq(acq_port_selected);
+	// TODO
 }
 
 void MainWindow::drawPlotter() {
