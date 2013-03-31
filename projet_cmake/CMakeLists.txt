@@ -7,10 +7,10 @@ cmake_policy(SET CMP0015 OLD)
 SET(CMAKE_INSTALL_PREFIX ${MA_SOLUTION_BINARY_DIR})
 
 IF (WIN32)
-add_subdirectory(ihm)
+add_subdirectory(Plotter)
 ENDIF (WIN32)
 
 IF (UNIX)
-add_subdirectory(ihm)
+add_subdirectory(Plotter)
 ENDIF (UNIX)
 

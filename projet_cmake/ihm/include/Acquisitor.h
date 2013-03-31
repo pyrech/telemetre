@@ -9,9 +9,8 @@
 #ifdef WIN32
 #include <stdio.h>
 #include <NIDAQmx.h>
-#endif
-
 #define DAQmxErrChk(functionCall) if( DAQmxFailed(error=(functionCall)) ) goto Error; else
+#endif
 
 #define CANAL_SIGNAL "Dev1/ai0"
 #define CANAL_TRIGGER "Dev1/ai5"
