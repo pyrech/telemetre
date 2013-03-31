@@ -19,13 +19,14 @@ void Calculator::detectPic(float64* data, int &start, int &end) {
 	float64 max_signal = max(data);
 	// If max is not high enough, there must be not relevant pic to detect
 	if (max_signal < MIN_PIC_VALUE) {
+		log("Pic to low ("+QString::number(max_signal)+")");
 		return;
 	}
 	// Threshold which determinate where the pic starts and ends
 	float64 threshold = max_signal*(100-THRESHOLD_PIC_PERCENT)/100;
-	for(int i=0; i<MAX_PIXEL; i++) {
+	for(int i=0; i<(MAX_PIXEL-1); i++) {
 		// Search for start if we haven't find it yet
-		if (start == 0 && data[i] > threshold) {
+		if (start == 0 && end == 0 && data[i] > threshold) {
 			start = i+1;
 		}
 		// Search for end if start found and end not yet found
@@ -33,9 +34,10 @@ void Calculator::detectPic(float64* data, int &start, int &end) {
 			end = i+1;
 		}
 		// If another pics, we can't know which is right
-		if (start != 0 && end != 0 && data[i] > threshold) {
+		if (start != 0 && end != 0 && data[i+1] > threshold) {
 			start = 0;
 			end = 0;
+			log("Many pics");
 			return;
 		}
 	}
@@ -81,4 +83,8 @@ QString Calculator::distToStr(double dist) {
 
 QString Calculator::distWithUnit(double dist, short precision, QString unit) {
 	return QString::number(dist, 'f', precision)+" "+unit;
+}
+
+void Calculator::log(QString msg) {
+	std::cout << "[Calculator] " << msg.toStdString() << std::endl;
 }
