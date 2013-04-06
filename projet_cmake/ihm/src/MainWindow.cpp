@@ -93,41 +93,41 @@ MainWindow::MainWindow() {
 	QGroupBox *acq_group_box = new QGroupBox(tr("Carte d'acquisition"));
 	acq_group_box->setLayout(acq_layout);
 
-	// Direct - ports
-	QLabel *dir_label_port = new QLabel(tr("Port :"));
-	dir_ports = new QComboBox(this);
-	dir_label_port->setBuddy(dir_ports);
+	// Controller - ports
+	QLabel *ctrl_label_port = new QLabel(tr("Port :"));
+	ctrl_ports = new QComboBox(this);
+	ctrl_label_port->setBuddy(ctrl_ports);
 	
-	// Direct - Top layout (ports)
-	QHBoxLayout *dir_top_port_layout = new QHBoxLayout;
-	dir_top_port_layout->addWidget(dir_label_port);
-	dir_top_port_layout->addWidget(dir_ports);
+	// Controller - Top layout (ports)
+	QHBoxLayout *ctrl_top_port_layout = new QHBoxLayout;
+	ctrl_top_port_layout->addWidget(ctrl_label_port);
+	ctrl_top_port_layout->addWidget(ctrl_ports);
 
-	// Direct - distance
-	QLabel *dir_label_distance = new QLabel(tr("Distance :"));
-	dir_edit_distance = new QLineEdit;
-	dir_edit_distance->setReadOnly(true);
-	dir_label_distance->setBuddy(dir_edit_distance);
+	// Controller - distance
+	QLabel *ctrl_label_distance = new QLabel(tr("Distance :"));
+	ctrl_edit_distance = new QLineEdit;
+	ctrl_edit_distance->setReadOnly(true);
+	ctrl_label_distance->setBuddy(ctrl_edit_distance);
 
-	// Direct - Top layout (distance)
-	QHBoxLayout *dir_top_dist_layout = new QHBoxLayout;
-	dir_top_dist_layout->addWidget(dir_label_distance);
-	dir_top_dist_layout->addWidget(dir_edit_distance);
+	// Controller - Top layout (distance)
+	QHBoxLayout *ctrl_top_dist_layout = new QHBoxLayout;
+	ctrl_top_dist_layout->addWidget(ctrl_label_distance);
+	ctrl_top_dist_layout->addWidget(ctrl_edit_distance);
 
-	// Direct - Layout (ports, distance)
-	QVBoxLayout *dir_layout = new QVBoxLayout;
-    dir_layout->setAlignment(Qt::AlignTop);
-	dir_layout->addLayout(dir_top_port_layout);
-	dir_layout->addLayout(dir_top_dist_layout);
+	// Controller - Layout (ports, distance)
+	QVBoxLayout *ctrl_layout = new QVBoxLayout;
+    ctrl_layout->setAlignment(Qt::AlignTop);
+	ctrl_layout->addLayout(ctrl_top_port_layout);
+	ctrl_layout->addLayout(ctrl_top_dist_layout);
 	
-	// Direct - Group box
-	QGroupBox *dir_group_box = new QGroupBox(tr("Microcontroleur"));
-	dir_group_box->setLayout(dir_layout);
+	// Controller - Group box
+	QGroupBox *ctrl_group_box = new QGroupBox(tr("Microcontroleur"));
+	ctrl_group_box->setLayout(ctrl_layout);
 
-	// Mesure layout (acquisition and direct)
+	// Mesure layout (acquisition and controller)
 	QHBoxLayout *mesure_layout = new QHBoxLayout;
 	mesure_layout->addWidget(acq_group_box);
-	mesure_layout->addWidget(dir_group_box);
+	mesure_layout->addWidget(ctrl_group_box);
 
 	// Main layout (configuration and mesure)
 	QVBoxLayout *main_layout = new QVBoxLayout;
@@ -138,10 +138,10 @@ MainWindow::MainWindow() {
 	// Update ports list
 	this->searchPorts();
 	QString default_port = "";
-	this->updatePortDir(default_port);
+	this->updatePortController(default_port);
 
 	// Add signal and slot
-	QObject::connect(dir_ports, SIGNAL(currentIndexChanged(int)), this, SLOT(selectedDirPort(int)));
+	QObject::connect(ctrl_ports, SIGNAL(currentIndexChanged(int)), this, SLOT(selectedControllerPort(int)));
 
 	// Init the calculator and acquisitor
 	this->calculator = new Calculator(this);
@@ -174,17 +174,17 @@ MainWindow::~MainWindow() {
 		delete(conf_edit_pixel);
 		conf_edit_pixel = NULL;
 	}
-	if (dir_ports != NULL) {
-		delete(dir_ports);
-		dir_ports = NULL;
+	if (ctrl_ports != NULL) {
+		delete(ctrl_ports);
+		ctrl_ports = NULL;
 	}
 	if (acq_edit_distance != NULL) {
 		delete(acq_edit_distance);
 		acq_edit_distance = NULL;
 	}
-	if (dir_edit_distance != NULL) {
-		delete(dir_edit_distance);
-		dir_edit_distance = NULL;
+	if (ctrl_edit_distance != NULL) {
+		delete(ctrl_edit_distance);
+		ctrl_edit_distance = NULL;
 	}
 	if (plotter != NULL) {
 		delete(plotter);
@@ -217,19 +217,19 @@ void MainWindow::searchPorts() {
 	}*/
 }
 
-void MainWindow::updatePortDir(QString &text) {
-	dir_ports->clear();
-	dir_ports->addItem("");
+void MainWindow::updatePortController(QString &text) {
+	ctrl_ports->clear();
+	ctrl_ports->addItem("");
     foreach (QString port, ports_found) {
-		dir_ports->addItem(port);
+		ctrl_ports->addItem(port);
 	}
-	int index = dir_ports->findText(text);
+	int index = ctrl_ports->findText(text);
 	if(index != -1) {
-		dir_ports->setCurrentIndex(index);
+		ctrl_ports->setCurrentIndex(index);
 	}
 }
 
-void MainWindow::selectedDirPort(int selected) {
+void MainWindow::selectedControllerPort(int selected) {
 	if (selected == 0) {
 		// disabled some fields ?
 	}
@@ -246,8 +246,8 @@ void MainWindow::updateDistance(int mode, QString dist) {
 			this->acq_edit_distance->setText(dist);
 			break;
 		}
-		case MODE_DIRECT: {
-			this->dir_edit_distance->setText(dist);
+		case MODE_CONTROLEUR: {
+			this->ctrl_edit_distance->setText(dist);
 			break;
 		}
 	}
@@ -272,7 +272,7 @@ void MainWindow::receivePixel(int pixel) {
   if (pixel > 0) {
 	dist = this->calculator->getDist(pixel);
   }
-  this->updateDistance(MODE_DIRECT, dist);
+  this->updateDistance(MODE_CONTROLEUR, dist);
 }
 
 float MainWindow::getAxesGap() {

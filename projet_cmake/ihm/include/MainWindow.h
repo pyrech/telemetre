@@ -19,7 +19,7 @@
 
 #define PLOTTER_CURVE_ID 0
 #define MAX_PIXEL 2048
-#define MODE_DIRECT 1
+#define MODE_CONTROLEUR 1
 #define MODE_ACQUISITION 2
 #define FOCUS_UNIT 0.001
 #define GAP_UNIT 0.001
@@ -42,15 +42,15 @@ private:
 	QLineEdit *conf_edit_pixel;
 	QList<QString> ports_found;
     //QList<QextPortInfo> ports
-	QComboBox *dir_ports;
+	QComboBox *ctrl_ports;
 	QLineEdit *acq_edit_distance;
-	QLineEdit *dir_edit_distance;
+	QLineEdit *ctrl_edit_distance;
 	Plotter *plotter;
 	Calculator *calculator;
 	Acquisitor *acquisitor;
 	QVector<QPointF> acq_data;
 
-    void updatePortDir(QString &text);
+    void updatePortController(QString &text);
 	void drawPlotter();
 	void updateDistance(int mode, QString dist);
 
@@ -65,7 +65,7 @@ public:
 	float getLensFocus();
 	
 public slots:
-	void selectedDirPort(int selected);
+	void selectedControllerPort(int selected);
 
 };
 
