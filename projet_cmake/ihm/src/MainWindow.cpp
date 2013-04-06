@@ -246,7 +246,7 @@ void MainWindow::updateDistance(int mode, QString dist) {
 			this->acq_edit_distance->setText(dist);
 			break;
 		}
-		case MODE_CONTROLEUR: {
+		case MODE_CONTROLLER: {
 			this->ctrl_edit_distance->setText(dist);
 			break;
 		}
@@ -272,7 +272,7 @@ void MainWindow::receivePixel(int pixel) {
   if (pixel > 0) {
 	dist = this->calculator->getDist(pixel);
   }
-  this->updateDistance(MODE_CONTROLEUR, dist);
+  this->updateDistance(MODE_CONTROLLER, dist);
 }
 
 float MainWindow::getAxesGap() {
