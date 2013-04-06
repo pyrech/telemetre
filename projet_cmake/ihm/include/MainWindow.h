@@ -7,10 +7,12 @@
 #include <QWidget>
 #include <QLabel>
 #include <QLineEdit>
+#include <QTextEdit>
 #include <QGroupBox>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QComboBox>
+#include <QTime>
 #include <QtCore/QList>
 #include <QDoubleValidator>
 #include <iostream>
@@ -26,6 +28,7 @@
 #define PIXEL_UNIT 0.000001
 #define MIN_PIC_VALUE 1
 #define THRESHOLD_PIC_PERCENT 10
+#define VERBOSE
 
 typedef double float64;
 //#include "qextserialenumerator.h"
@@ -45,6 +48,7 @@ private:
 	QComboBox *ctrl_ports;
 	QLineEdit *acq_edit_distance;
 	QLineEdit *ctrl_edit_distance;
+	QTextEdit *log_edit;
 	Plotter *plotter;
 	Calculator *calculator;
 	Acquisitor *acquisitor;
@@ -63,6 +67,7 @@ public:
 	float getAxesGap();
 	float getPixelWidth();
 	float getLensFocus();
+	void log(QString str);
 	
 public slots:
 	void selectedControllerPort(int selected);

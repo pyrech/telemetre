@@ -86,5 +86,5 @@ QString Calculator::distWithUnit(double dist, short precision, QString unit) {
 }
 
 void Calculator::log(QString msg) {
-	std::cout << "[Calculator] " << msg.toStdString() << std::endl;
+	this->parent->log("[Calculator] "+msg);
 }

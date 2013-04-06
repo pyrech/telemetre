@@ -129,10 +129,23 @@ MainWindow::MainWindow() {
 	mesure_layout->addWidget(acq_group_box);
 	mesure_layout->addWidget(ctrl_group_box);
 
-	// Main layout (configuration and mesure)
+	// Log - field
+	log_edit = new QTextEdit();
+	log_edit->setReadOnly(true);
+
+	// Log - Layout
+	QHBoxLayout *log_layout = new QHBoxLayout;
+	log_layout->addWidget(log_edit);
+
+	// Log - Group box
+	QGroupBox *log_group_box = new QGroupBox(tr("Console"));
+	log_group_box->setLayout(log_layout);
+
+	// Main layout (configuration, mesure, log)
 	QVBoxLayout *main_layout = new QVBoxLayout;
 	main_layout->addWidget(conf_group_box);
 	main_layout->addLayout(mesure_layout);
+	main_layout->addWidget(log_group_box);
 	this->setLayout(main_layout);
 
 	// Update ports list
@@ -146,6 +159,8 @@ MainWindow::MainWindow() {
 	// Init the calculator and acquisitor
 	this->calculator = new Calculator(this);
 	this->acquisitor = new Acquisitor(this);
+
+	this->log("Init the programm");
 
 	/*test*/
 	int pixel = 1333;
@@ -185,6 +200,10 @@ MainWindow::~MainWindow() {
 	if (ctrl_edit_distance != NULL) {
 		delete(ctrl_edit_distance);
 		ctrl_edit_distance = NULL;
+	}
+	if (log_edit != NULL) {
+		delete(log_edit);
+		log_edit = NULL;
 	}
 	if (plotter != NULL) {
 		delete(plotter);
@@ -231,9 +250,14 @@ void MainWindow::updatePortController(QString &text) {
 
 void MainWindow::selectedControllerPort(int selected) {
 	if (selected == 0) {
-		// disabled some fields ?
+		// disable some fields ?
+		// disable the qextserialport ?
+		this->log("No port selected for microcontroller");
 	}
-	// TODO
+	else {
+		// TODO
+		this->log("Change port of microcontroller for "+ctrl_ports->itemText(selected));
+	}
 }
 
 void MainWindow::drawPlotter() {
@@ -254,6 +278,9 @@ void MainWindow::updateDistance(int mode, QString dist) {
 }
 
 void MainWindow::receiveData(float64* data) {
+	#ifdef VERBOSE
+	this->log("Acquisition : Receive data");
+	#endif
 	acq_data.erase(acq_data.begin(), acq_data.end());
 	plotter->clearCurve(PLOTTER_CURVE_ID);
 	for (int i=0; i<MAX_PIXEL; i+=1) {
@@ -263,16 +290,22 @@ void MainWindow::receiveData(float64* data) {
 	int pixel = 0;
 	QString dist = "NC";
 	pixel = this->calculator->getPixel(data);
+	#ifdef VERBOSE
+	this->log("Acquisition : pixel calculated ("+QString::number(pixel)+")");
+	#endif
 	dist = this->calculator->getDist(pixel);
-  this->updateDistance(MODE_ACQUISITION, dist);
+	this->updateDistance(MODE_ACQUISITION, dist);
 }
 
 void MainWindow::receivePixel(int pixel) {
-  QString dist = "NC";
-  if (pixel > 0) {
-	dist = this->calculator->getDist(pixel);
-  }
-  this->updateDistance(MODE_CONTROLLER, dist);
+	#ifdef VERBOSE
+	this->log("Microcontroller : receive pixel ("+QString::number(pixel)+")");
+	#endif
+	QString dist = "NC";
+	if (pixel > 0) {
+		dist = this->calculator->getDist(pixel);
+	}
+	this->updateDistance(MODE_CONTROLLER, dist);
 }
 
 float MainWindow::getAxesGap() {
@@ -285,4 +318,8 @@ float MainWindow::getPixelWidth() {
 
 float MainWindow::getLensFocus() {
 	return this->conf_edit_focus->text().toFloat();
+}
+
+void MainWindow::log(QString str) {
+	this->log_edit->append(QTime::currentTime().toString("HH:mm:ss:zzz")+" - "+str);
 }
