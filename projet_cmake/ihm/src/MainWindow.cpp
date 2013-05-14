@@ -103,6 +103,17 @@ MainWindow::MainWindow() {
 	ctrl_top_port_layout->addWidget(ctrl_label_port);
 	ctrl_top_port_layout->addWidget(ctrl_ports);
 
+	// Controller - pixel
+	QLabel *ctrl_label_pixel = new QLabel(tr("Pixel :"));
+	ctrl_edit_pixel = new QLineEdit;
+	ctrl_edit_pixel->setReadOnly(true);
+	ctrl_label_pixel->setBuddy(ctrl_edit_pixel);
+
+	// Controller - Top layout (pixel)
+	QHBoxLayout *ctrl_top_pixel_layout = new QHBoxLayout;
+	ctrl_top_pixel_layout->addWidget(ctrl_label_pixel);
+	ctrl_top_pixel_layout->addWidget(ctrl_edit_pixel);
+
 	// Controller - distance
 	QLabel *ctrl_label_distance = new QLabel(tr("Distance :"));
 	ctrl_edit_distance = new QLineEdit;
@@ -114,10 +125,11 @@ MainWindow::MainWindow() {
 	ctrl_top_dist_layout->addWidget(ctrl_label_distance);
 	ctrl_top_dist_layout->addWidget(ctrl_edit_distance);
 
-	// Controller - Layout (ports, distance)
+	// Controller - Layout (ports, pixel, distance)
 	QVBoxLayout *ctrl_layout = new QVBoxLayout;
     ctrl_layout->setAlignment(Qt::AlignTop);
 	ctrl_layout->addLayout(ctrl_top_port_layout);
+	ctrl_layout->addLayout(ctrl_top_pixel_layout);
 	ctrl_layout->addLayout(ctrl_top_dist_layout);
 	
 	// Controller - Group box
@@ -279,7 +291,7 @@ void MainWindow::updateDistance(int mode, QString dist) {
 
 void MainWindow::receiveData(float64* data) {
 	#ifdef VERBOSE
-	this->log("Acquisition : Receive data");
+	this->log("Acquisition : receive data");
 	#endif
 	acq_data.erase(acq_data.begin(), acq_data.end());
 	plotter->clearCurve(PLOTTER_CURVE_ID);
@@ -302,7 +314,9 @@ void MainWindow::receivePixel(int pixel) {
 	this->log("Microcontroller : receive pixel ("+QString::number(pixel)+")");
 	#endif
 	QString dist = "NC";
+	this->ctrl_edit_pixel->clear();
 	if (pixel > 0) {
+		this->ctrl_edit_pixel->setText(QString::number(pixel));
 		dist = this->calculator->getDist(pixel);
 	}
 	this->updateDistance(MODE_CONTROLLER, dist);

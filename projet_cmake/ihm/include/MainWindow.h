@@ -46,6 +46,7 @@ private:
 	QList<QString> ports_found;
     //QList<QextPortInfo> ports
 	QComboBox *ctrl_ports;
+	QLineEdit *ctrl_edit_pixel;
 	QLineEdit *acq_edit_distance;
 	QLineEdit *ctrl_edit_distance;
 	QTextEdit *log_edit;
