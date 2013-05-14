@@ -32,6 +32,7 @@
 
 typedef double float64;
 //#include "qextserialenumerator.h"
+//#include <boost/asio.hpp>
 
 class Calculator;
 class Acquisitor;
@@ -44,7 +45,6 @@ private:
 	QLineEdit *conf_edit_gap;
 	QLineEdit *conf_edit_pixel;
 	QList<QString> ports_found;
-    //QList<QextPortInfo> ports
 	QComboBox *ctrl_ports;
 	QLineEdit *ctrl_edit_pixel;
 	QLineEdit *acq_edit_distance;

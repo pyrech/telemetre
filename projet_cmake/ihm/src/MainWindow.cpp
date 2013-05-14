@@ -228,24 +228,32 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::searchPorts() {
+
 	ports_found.append("USB1");
 	ports_found.append("USB2");
 	ports_found.append("USB3");
 	ports_found.append("USB4");
 	ports_found.append("CD");
-	//ports_found = QextSerialEnumerator::getPorts();
 
-    /*std::cout << "List of ports:";
-    foreach (QextPortInfo info, ports_found) {
+	// https://groups.google.com/forum/?fromgroups=#!topic/boost-list/0RpVAVSTQXQ
+
+	// http://www.codeguru.com/cpp/w-p/system/hardwareinformation/article.php/c5721/Determining-What-Serial-Ports-Are-Available-on-a-Windows-Machine.htm
+
+	// http://qt-project.org/wiki/QtSerialPort
+
+    /*
+    foreach (QextPortInfo info, QextSerialEnumerator::getPorts()) {
+		
+		ports_found.append(info.portName);
+
         std::cout << "port name:"       << info.portName.toStdString();
         std::cout << "friendly name:"   << info.friendName.toStdString();
         std::cout << "physical name:"   << info.physName.toStdString();
         std::cout << "enumerator name:" << info.enumName.toStdString();
         std::cout << "vendor ID:"       << info.vendorID;
         std::cout << "product ID:"      << info.productID;
-
-        std::cout << "==================================="<<std::endl;
-	}*/
+	}
+	*/
 }
 
 void MainWindow::updatePortController(QString &text) {
