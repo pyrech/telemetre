@@ -16,6 +16,11 @@
 #include <QtCore/QList>
 #include <QDoubleValidator>
 #include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <vector>
+#include <sstream>
+#include "Tools.h"
 #include "Plotter.h"
 
 

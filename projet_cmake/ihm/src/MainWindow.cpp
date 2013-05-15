@@ -2,6 +2,7 @@
 #include "Calculator.h"
 #include "Acquisitor.h"
 
+using namespace std;
 
 MainWindow::MainWindow() {
 
@@ -229,11 +230,38 @@ MainWindow::~MainWindow() {
 
 void MainWindow::searchPorts() {
 
-	ports_found.append("USB1");
-	ports_found.append("USB2");
-	ports_found.append("USB3");
-	ports_found.append("USB4");
-	ports_found.append("CD");
+	
+
+	#ifdef __APPLE__
+
+		string ls = Tools::GetStdoutFromCommand("ls /dev/cu.*");
+
+		istringstream iss(ls);
+		vector<string> tokens;
+		copy(istream_iterator<string>(iss),
+	         istream_iterator<string>(),
+	         back_inserter<vector<string> >(tokens));
+
+		for (std::vector<string>::iterator it = tokens.begin() ; it != tokens.end(); ++it){
+
+			QString str((*it).c_str()); 
+			ports_found.append(str);
+
+		}
+	    	
+
+	
+ 	#else
+
+
+		ports_found.append("USB1");
+		ports_found.append("USB2");
+		ports_found.append("USB3");
+		ports_found.append("USB4");
+		ports_found.append("CD");
+
+	#endif
+
 
 	// https://groups.google.com/forum/?fromgroups=#!topic/boost-list/0RpVAVSTQXQ
 

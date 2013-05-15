@@ -1,6 +1,13 @@
 #include <QApplication>
 #include "MainWindow.h"
+#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <vector>
+#include <sstream>
 
+
+using namespace std;
 
 int main(int argc, char *argv[]){
 
@@ -10,5 +17,5 @@ int main(int argc, char *argv[]){
 
 	//execute the application
 	return app.exec();	
-	
+
 }

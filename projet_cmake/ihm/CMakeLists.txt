@@ -35,12 +35,14 @@ ${CMAKE_SOURCE_DIR}/src/MainWindow.cpp
 ${CMAKE_SOURCE_DIR}/src/Calculator.cpp
 ${CMAKE_SOURCE_DIR}/src/Acquisitor.cpp
 ${CMAKE_SOURCE_DIR}/src/Plotter.cpp
+${CMAKE_SOURCE_DIR}/src/Tools.cpp
 
 # Project headers
 ${CMAKE_SOURCE_DIR}/include/MainWindow.h
 ${CMAKE_SOURCE_DIR}/include/Calculator.h
 ${CMAKE_SOURCE_DIR}/include/Acquisitor.h
 ${CMAKE_SOURCE_DIR}/include/Plotter.h
+${CMAKE_SOURCE_DIR}/include/Tools.h
 )
 
 # MOCing process 
