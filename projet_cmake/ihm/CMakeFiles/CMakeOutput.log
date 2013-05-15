@@ -1,0 +1,212 @@
+The system is: Darwin - 12.3.0 - i386
+Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+Compiler: /usr/bin/cc 
+Build flags: 
+Id flags: 
+
+The output was:
+0
+
+
+Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
+
+The C compiler identification is Clang, found in "/Users/phoenix2406/Documents/Cours/PPS4/projet/telemetre_git/telemetre/projet_cmake/ihm/CMakeFiles/2.8.10.2/CompilerIdC/a.out"
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+Compiler: /usr/bin/c++ 
+Build flags: 
+Id flags: 
+
+The output was:
+0
+
+
+Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
+
+The CXX compiler identification is Clang, found in "/Users/phoenix2406/Documents/Cours/PPS4/projet/telemetre_git/telemetre/projet_cmake/ihm/CMakeFiles/2.8.10.2/CompilerIdCXX/a.out"
+
+Determining if the C compiler works passed with the following output:
+Change Dir: /Users/phoenix2406/Documents/Cours/PPS4/projet/telemetre_git/telemetre/projet_cmake/ihm/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec315180866/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec315180866.dir/build.make CMakeFiles/cmTryCompileExec315180866.dir/build
+"/Applications/CMake 2.8-10.app/Contents/bin/cmake" -E cmake_progress_report /Users/phoenix2406/Documents/Cours/PPS4/projet/telemetre_git/telemetre/projet_cmake/ihm/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec315180866.dir/testCCompiler.c.o
+/usr/bin/cc    -o CMakeFiles/cmTryCompileExec315180866.dir/testCCompiler.c.o   -c /Users/phoenix2406/Documents/Cours/PPS4/projet/telemetre_git/telemetre/projet_cmake/ihm/CMakeFiles/CMakeTmp/testCCompiler.c
+Linking C executable cmTryCompileExec315180866
+"/Applications/CMake 2.8-10.app/Contents/bin/cmake" -E cmake_link_script CMakeFiles/cmTryCompileExec315180866.dir/link.txt --verbose=1
+/usr/bin/cc      -Wl,-search_paths_first -Wl,-headerpad_max_install_names   CMakeFiles/cmTryCompileExec315180866.dir/testCCompiler.c.o  -o cmTryCompileExec315180866  
+
+
+Detecting C compiler ABI info compiled with the following output:
+Change Dir: /Users/phoenix2406/Documents/Cours/PPS4/projet/telemetre_git/telemetre/projet_cmake/ihm/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec687165548/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec687165548.dir/build.make CMakeFiles/cmTryCompileExec687165548.dir/build
+"/Applications/CMake 2.8-10.app/Contents/bin/cmake" -E cmake_progress_report /Users/phoenix2406/Documents/Cours/PPS4/projet/telemetre_git/telemetre/projet_cmake/ihm/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec687165548.dir/CMakeCCompilerABI.c.o
+/usr/bin/cc    -o CMakeFiles/cmTryCompileExec687165548.dir/CMakeCCompilerABI.c.o   -c "/Applications/CMake 2.8-10.app/Contents/share/cmake-2.8/Modules/CMakeCCompilerABI.c"
+Linking C executable cmTryCompileExec687165548
+"/Applications/CMake 2.8-10.app/Contents/bin/cmake" -E cmake_link_script CMakeFiles/cmTryCompileExec687165548.dir/link.txt --verbose=1
+/usr/bin/cc      -Wl,-search_paths_first -Wl,-headerpad_max_install_names -v CMakeFiles/cmTryCompileExec687165548.dir/CMakeCCompilerABI.c.o  -o cmTryCompileExec687165548   
+Apple clang version 4.1 (tags/Apple/clang-421.11.66) (based on LLVM 3.1svn)
+Target: x86_64-apple-darwin12.3.0
+Thread model: posix
+ "/usr/bin/ld" -demangle -dynamic -arch x86_64 -macosx_version_min 10.8.0 -o cmTryCompileExec687165548 -search_paths_first -headerpad_max_install_names CMakeFiles/cmTryCompileExec687165548.dir/CMakeCCompilerABI.c.o -lSystem /usr/bin/../lib/clang/4.1/lib/darwin/libclang_rt.osx.a
+
+
+Parsed C implicit link information from above output:
+  link line regex: [^( *|.*[/\])(ld|ld|collect2)[^/\]*( |$)]
+  ignore line: [Change Dir: /Users/phoenix2406/Documents/Cours/PPS4/projet/telemetre_git/telemetre/projet_cmake/ihm/CMakeFiles/CMakeTmp]
+  ignore line: []
+  ignore line: [Run Build Command:/usr/bin/make "cmTryCompileExec687165548/fast"]
+  ignore line: [/usr/bin/make -f CMakeFiles/cmTryCompileExec687165548.dir/build.make CMakeFiles/cmTryCompileExec687165548.dir/build]
+  ignore line: ["/Applications/CMake 2.8-10.app/Contents/bin/cmake" -E cmake_progress_report /Users/phoenix2406/Documents/Cours/PPS4/projet/telemetre_git/telemetre/projet_cmake/ihm/CMakeFiles/CMakeTmp/CMakeFiles 1]
+  ignore line: [Building C object CMakeFiles/cmTryCompileExec687165548.dir/CMakeCCompilerABI.c.o]
+  ignore line: [/usr/bin/cc    -o CMakeFiles/cmTryCompileExec687165548.dir/CMakeCCompilerABI.c.o   -c "/Applications/CMake 2.8-10.app/Contents/share/cmake-2.8/Modules/CMakeCCompilerABI.c"]
+  ignore line: [Linking C executable cmTryCompileExec687165548]
+  ignore line: ["/Applications/CMake 2.8-10.app/Contents/bin/cmake" -E cmake_link_script CMakeFiles/cmTryCompileExec687165548.dir/link.txt --verbose=1]
+  ignore line: [/usr/bin/cc      -Wl,-search_paths_first -Wl,-headerpad_max_install_names -v CMakeFiles/cmTryCompileExec687165548.dir/CMakeCCompilerABI.c.o  -o cmTryCompileExec687165548   ]
+  ignore line: [Apple clang version 4.1 (tags/Apple/clang-421.11.66) (based on LLVM 3.1svn)]
+  ignore line: [Target: x86_64-apple-darwin12.3.0]
+  ignore line: [Thread model: posix]
+  link line: [ "/usr/bin/ld" -demangle -dynamic -arch x86_64 -macosx_version_min 10.8.0 -o cmTryCompileExec687165548 -search_paths_first -headerpad_max_install_names CMakeFiles/cmTryCompileExec687165548.dir/CMakeCCompilerABI.c.o -lSystem /usr/bin/../lib/clang/4.1/lib/darwin/libclang_rt.osx.a]
+    arg [/usr/bin/ld] ==> ignore
+    arg [-demangle] ==> ignore
+    arg [-dynamic] ==> ignore
+    arg [-arch] ==> ignore
+    arg [x86_64] ==> ignore
+    arg [-macosx_version_min] ==> ignore
+    arg [10.8.0] ==> ignore
+    arg [-o] ==> ignore
+    arg [cmTryCompileExec687165548] ==> ignore
+    arg [-search_paths_first] ==> ignore
+    arg [-headerpad_max_install_names] ==> ignore
+    arg [CMakeFiles/cmTryCompileExec687165548.dir/CMakeCCompilerABI.c.o] ==> ignore
+    arg [-lSystem] ==> lib [System]
+    arg [/usr/bin/../lib/clang/4.1/lib/darwin/libclang_rt.osx.a] ==> lib [/usr/bin/../lib/clang/4.1/lib/darwin/libclang_rt.osx.a]
+  remove lib [System]
+  implicit libs: [/usr/bin/../lib/clang/4.1/lib/darwin/libclang_rt.osx.a]
+  implicit dirs: []
+
+
+Determining if the CXX compiler works passed with the following output:
+Change Dir: /Users/phoenix2406/Documents/Cours/PPS4/projet/telemetre_git/telemetre/projet_cmake/ihm/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec2717286092/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec2717286092.dir/build.make CMakeFiles/cmTryCompileExec2717286092.dir/build
+"/Applications/CMake 2.8-10.app/Contents/bin/cmake" -E cmake_progress_report /Users/phoenix2406/Documents/Cours/PPS4/projet/telemetre_git/telemetre/projet_cmake/ihm/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building CXX object CMakeFiles/cmTryCompileExec2717286092.dir/testCXXCompiler.cxx.o
+/usr/bin/c++     -o CMakeFiles/cmTryCompileExec2717286092.dir/testCXXCompiler.cxx.o -c /Users/phoenix2406/Documents/Cours/PPS4/projet/telemetre_git/telemetre/projet_cmake/ihm/CMakeFiles/CMakeTmp/testCXXCompiler.cxx
+Linking CXX executable cmTryCompileExec2717286092
+"/Applications/CMake 2.8-10.app/Contents/bin/cmake" -E cmake_link_script CMakeFiles/cmTryCompileExec2717286092.dir/link.txt --verbose=1
+/usr/bin/c++       -Wl,-search_paths_first -Wl,-headerpad_max_install_names   CMakeFiles/cmTryCompileExec2717286092.dir/testCXXCompiler.cxx.o  -o cmTryCompileExec2717286092  
+
+
+Detecting CXX compiler ABI info compiled with the following output:
+Change Dir: /Users/phoenix2406/Documents/Cours/PPS4/projet/telemetre_git/telemetre/projet_cmake/ihm/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec2336085621/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec2336085621.dir/build.make CMakeFiles/cmTryCompileExec2336085621.dir/build
+"/Applications/CMake 2.8-10.app/Contents/bin/cmake" -E cmake_progress_report /Users/phoenix2406/Documents/Cours/PPS4/projet/telemetre_git/telemetre/projet_cmake/ihm/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building CXX object CMakeFiles/cmTryCompileExec2336085621.dir/CMakeCXXCompilerABI.cpp.o
+/usr/bin/c++     -o CMakeFiles/cmTryCompileExec2336085621.dir/CMakeCXXCompilerABI.cpp.o -c "/Applications/CMake 2.8-10.app/Contents/share/cmake-2.8/Modules/CMakeCXXCompilerABI.cpp"
+Linking CXX executable cmTryCompileExec2336085621
+"/Applications/CMake 2.8-10.app/Contents/bin/cmake" -E cmake_link_script CMakeFiles/cmTryCompileExec2336085621.dir/link.txt --verbose=1
+/usr/bin/c++       -Wl,-search_paths_first -Wl,-headerpad_max_install_names -v CMakeFiles/cmTryCompileExec2336085621.dir/CMakeCXXCompilerABI.cpp.o  -o cmTryCompileExec2336085621   
+Apple clang version 4.1 (tags/Apple/clang-421.11.66) (based on LLVM 3.1svn)
+Target: x86_64-apple-darwin12.3.0
+Thread model: posix
+ "/usr/bin/ld" -demangle -dynamic -arch x86_64 -macosx_version_min 10.8.0 -o cmTryCompileExec2336085621 -search_paths_first -headerpad_max_install_names CMakeFiles/cmTryCompileExec2336085621.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lSystem /usr/bin/../lib/clang/4.1/lib/darwin/libclang_rt.osx.a
+
+
+Parsed CXX implicit link information from above output:
+  link line regex: [^( *|.*[/\])(ld|ld|collect2)[^/\]*( |$)]
+  ignore line: [Change Dir: /Users/phoenix2406/Documents/Cours/PPS4/projet/telemetre_git/telemetre/projet_cmake/ihm/CMakeFiles/CMakeTmp]
+  ignore line: []
+  ignore line: [Run Build Command:/usr/bin/make "cmTryCompileExec2336085621/fast"]
+  ignore line: [/usr/bin/make -f CMakeFiles/cmTryCompileExec2336085621.dir/build.make CMakeFiles/cmTryCompileExec2336085621.dir/build]
+  ignore line: ["/Applications/CMake 2.8-10.app/Contents/bin/cmake" -E cmake_progress_report /Users/phoenix2406/Documents/Cours/PPS4/projet/telemetre_git/telemetre/projet_cmake/ihm/CMakeFiles/CMakeTmp/CMakeFiles 1]
+  ignore line: [Building CXX object CMakeFiles/cmTryCompileExec2336085621.dir/CMakeCXXCompilerABI.cpp.o]
+  ignore line: [/usr/bin/c++     -o CMakeFiles/cmTryCompileExec2336085621.dir/CMakeCXXCompilerABI.cpp.o -c "/Applications/CMake 2.8-10.app/Contents/share/cmake-2.8/Modules/CMakeCXXCompilerABI.cpp"]
+  ignore line: [Linking CXX executable cmTryCompileExec2336085621]
+  ignore line: ["/Applications/CMake 2.8-10.app/Contents/bin/cmake" -E cmake_link_script CMakeFiles/cmTryCompileExec2336085621.dir/link.txt --verbose=1]
+  ignore line: [/usr/bin/c++       -Wl,-search_paths_first -Wl,-headerpad_max_install_names -v CMakeFiles/cmTryCompileExec2336085621.dir/CMakeCXXCompilerABI.cpp.o  -o cmTryCompileExec2336085621   ]
+  ignore line: [Apple clang version 4.1 (tags/Apple/clang-421.11.66) (based on LLVM 3.1svn)]
+  ignore line: [Target: x86_64-apple-darwin12.3.0]
+  ignore line: [Thread model: posix]
+  link line: [ "/usr/bin/ld" -demangle -dynamic -arch x86_64 -macosx_version_min 10.8.0 -o cmTryCompileExec2336085621 -search_paths_first -headerpad_max_install_names CMakeFiles/cmTryCompileExec2336085621.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lSystem /usr/bin/../lib/clang/4.1/lib/darwin/libclang_rt.osx.a]
+    arg [/usr/bin/ld] ==> ignore
+    arg [-demangle] ==> ignore
+    arg [-dynamic] ==> ignore
+    arg [-arch] ==> ignore
+    arg [x86_64] ==> ignore
+    arg [-macosx_version_min] ==> ignore
+    arg [10.8.0] ==> ignore
+    arg [-o] ==> ignore
+    arg [cmTryCompileExec2336085621] ==> ignore
+    arg [-search_paths_first] ==> ignore
+    arg [-headerpad_max_install_names] ==> ignore
+    arg [CMakeFiles/cmTryCompileExec2336085621.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+    arg [-lstdc++] ==> lib [stdc++]
+    arg [-lSystem] ==> lib [System]
+    arg [/usr/bin/../lib/clang/4.1/lib/darwin/libclang_rt.osx.a] ==> lib [/usr/bin/../lib/clang/4.1/lib/darwin/libclang_rt.osx.a]
+  remove lib [System]
+  implicit libs: [stdc++;/usr/bin/../lib/clang/4.1/lib/darwin/libclang_rt.osx.a]
+  implicit dirs: []
+
+
+Determining if the Q_WS_MAC exist passed with the following output:
+Change Dir: /Users/phoenix2406/Documents/Cours/PPS4/projet/telemetre_git/telemetre/projet_cmake/ihm/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec3172385682/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec3172385682.dir/build.make CMakeFiles/cmTryCompileExec3172385682.dir/build
+"/Applications/CMake 2.8-10.app/Contents/bin/cmake" -E cmake_progress_report /Users/phoenix2406/Documents/Cours/PPS4/projet/telemetre_git/telemetre/projet_cmake/ihm/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building CXX object CMakeFiles/cmTryCompileExec3172385682.dir/CheckSymbolExists.cxx.o
+/usr/bin/c++    -F/Library/Frameworks    -o CMakeFiles/cmTryCompileExec3172385682.dir/CheckSymbolExists.cxx.o -c /Users/phoenix2406/Documents/Cours/PPS4/projet/telemetre_git/telemetre/projet_cmake/ihm/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx
+Linking CXX executable cmTryCompileExec3172385682
+"/Applications/CMake 2.8-10.app/Contents/bin/cmake" -E cmake_link_script CMakeFiles/cmTryCompileExec3172385682.dir/link.txt --verbose=1
+/usr/bin/c++       -Wl,-search_paths_first -Wl,-headerpad_max_install_names   CMakeFiles/cmTryCompileExec3172385682.dir/CheckSymbolExists.cxx.o  -o cmTryCompileExec3172385682  
+
+File /Users/phoenix2406/Documents/Cours/PPS4/projet/telemetre_git/telemetre/projet_cmake/ihm/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:
+/* */
+#include <QtCore/qglobal.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef Q_WS_MAC
+  return ((int*)(&Q_WS_MAC))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the QT_MAC_USE_COCOA exist passed with the following output:
+Change Dir: /Users/phoenix2406/Documents/Cours/PPS4/projet/telemetre_git/telemetre/projet_cmake/ihm/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec2269687786/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec2269687786.dir/build.make CMakeFiles/cmTryCompileExec2269687786.dir/build
+"/Applications/CMake 2.8-10.app/Contents/bin/cmake" -E cmake_progress_report /Users/phoenix2406/Documents/Cours/PPS4/projet/telemetre_git/telemetre/projet_cmake/ihm/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building CXX object CMakeFiles/cmTryCompileExec2269687786.dir/CheckSymbolExists.cxx.o
+/usr/bin/c++    -F/Library/Frameworks    -o CMakeFiles/cmTryCompileExec2269687786.dir/CheckSymbolExists.cxx.o -c /Users/phoenix2406/Documents/Cours/PPS4/projet/telemetre_git/telemetre/projet_cmake/ihm/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx
+Linking CXX executable cmTryCompileExec2269687786
+"/Applications/CMake 2.8-10.app/Contents/bin/cmake" -E cmake_link_script CMakeFiles/cmTryCompileExec2269687786.dir/link.txt --verbose=1
+/usr/bin/c++       -Wl,-search_paths_first -Wl,-headerpad_max_install_names   CMakeFiles/cmTryCompileExec2269687786.dir/CheckSymbolExists.cxx.o  -o cmTryCompileExec2269687786  
+
+File /Users/phoenix2406/Documents/Cours/PPS4/projet/telemetre_git/telemetre/projet_cmake/ihm/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:
+/* */
+#include <QtCore/qconfig.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef QT_MAC_USE_COCOA
+  return ((int*)(&QT_MAC_USE_COCOA))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+

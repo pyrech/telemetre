@@ -305,6 +305,7 @@ void MainWindow::selectedControllerPort(int selected) {
 	else {
 		// TODO
 		this->log("Change port of microcontroller for "+ctrl_ports->itemText(selected));
+		this->log(ctrl_ports->currentText());
 	}
 }
 

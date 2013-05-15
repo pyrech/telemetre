@@ -37,7 +37,7 @@
 
 typedef double float64;
 //#include "qextserialenumerator.h"
-//#include <boost/asio.hpp>
+#include <boost/asio.hpp>
 
 class Calculator;
 class Acquisitor;
