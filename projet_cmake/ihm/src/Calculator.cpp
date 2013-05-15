@@ -16,7 +16,7 @@ int Calculator::getPixel(float64* data) {
 void Calculator::detectPic(float64* data, int &start, int &end) {
 	start = 0;
 	end = 0;
-	float64 max_signal = max(data);
+	float64 max_signal = maxValue(data);
 	// If max is not high enough, there must be not relevant pic to detect
 	if (max_signal < MIN_PIC_VALUE) {
 		log("Pic to low ("+QString::number(max_signal)+")");
@@ -24,7 +24,7 @@ void Calculator::detectPic(float64* data, int &start, int &end) {
 	}
 	// Threshold which determinate where the pic starts and ends
 	float64 threshold = max_signal*(100-THRESHOLD_PIC_PERCENT)/100;
-	for(int i=0; i<(MAX_PIXEL-1); i++) {
+	for(int i=0; i<(NB_PIXEL-1); i++) {
 		// Search for start if we haven't find it yet
 		if (start == 0 && end == 0 && data[i] > threshold) {
 			start = i+1;
@@ -43,9 +43,9 @@ void Calculator::detectPic(float64* data, int &start, int &end) {
 	}
 }
 
-float64 Calculator::max(float64* data) {
+float64 Calculator::maxValue(float64* data) {
 	float64 max = 0;
-	for(int i=0; i<MAX_PIXEL; i++) {
+	for(int i=0; i<NB_PIXEL; i++) {
 		if (data[i] > max) {
 			max = data[i];
 		}
@@ -58,7 +58,7 @@ int Calculator::round(double d) {
 }
 
 QString Calculator::getDist(int pixel) {
-	if (pixel < 1 || pixel > MAX_PIXEL) {
+	if (pixel < 1 || pixel > NB_PIXEL) {
 		return "Invalid pixel ("+QString::number(pixel)+")";
 	}
 	double distance = 0;

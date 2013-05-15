@@ -24,7 +24,7 @@
 #include "Plotter.h"
 
 #define PLOTTER_CURVE_ID 0
-#define MAX_PIXEL 2048
+#define NB_PIXEL 2048
 #define MODE_CONTROLLER 1
 #define MODE_ACQUISITION 2
 #define FOCUS_UNIT 0.001
@@ -37,6 +37,13 @@
 typedef double float64;
 //#include "qextserialenumerator.h"
 //#include <boost/asio.hpp>
+
+
+#ifdef WIN32
+	//#include <stdio.h>
+	#include <windows.h>
+	//#include <string.h>
+#endif
 
 class Calculator;
 class Acquisitor;
@@ -60,14 +67,13 @@ private:
 	QVector<QPointF> acq_data;
 
     void updatePortController(QString &text);
-	void drawPlotter();
 	void updateDistance(int mode, QString dist);
 
 public:
 	MainWindow();
     ~MainWindow();
 	void searchPorts();
-	void receiveData(float64* data);
+	void receiveData(float64* data, int count);
 	void receivePixel(int pixel);
 	float getAxesGap();
 	float getPixelWidth();

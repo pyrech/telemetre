@@ -12,19 +12,30 @@
 #define DAQmxErrChk(functionCall) if( DAQmxFailed(error=(functionCall)) ) goto Error; else
 #endif
 
-#define CANAL_SIGNAL "Dev1/ai0"
-#define CANAL_TRIGGER "Dev1/ai5"
+#define ACQ_CALLBACK_EVERY_N_SAMPLE 50
+#define ACQ_DEVICE "Dev3"
+#define ACQ_CANAL_SIGNAL ACQ_DEVICE "/ai0"
+#define ACQ_CANAL_TRIGGER ACQ_DEVICE "/ai5"
 
 typedef double float64;
 
 class Acquisitor : public QObject {
 
 private:
+	TaskHandle taskHandle;
 	MainWindow *parent;
-	void process();
+	void trigger();
+	friend int32 CVICALLBACK everyNCallback(TaskHandle taskHandle, int32 everyNsamplesEventType, uInt32 nSamples, void *callbackData);
+	friend int32 CVICALLBACK doneCallback(TaskHandle taskHandle, int32 status, void *callbackData);
 
 public:
 	Acquisitor(MainWindow *_parent);
+	void init();
+	void cleanup();
+	void log(QString msg);
 };
+
+int32 CVICALLBACK everyNCallback(TaskHandle taskHandle, int32 everyNsamplesEventType, uInt32 nSamples, void *callbackData);
+int32 CVICALLBACK doneCallback(TaskHandle taskHandle, int32 status, void *callbackData);
 
 #endif 
