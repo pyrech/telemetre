@@ -6,9 +6,6 @@
 #include <vector>
 #include <sstream>
 
-
-using namespace std;
-
 int main(int argc, char *argv[]){
 
 	QApplication app(argc, argv);				
@@ -17,5 +14,4 @@ int main(int argc, char *argv[]){
 
 	//execute the application
 	return app.exec();	
-
 }

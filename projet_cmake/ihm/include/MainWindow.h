@@ -23,7 +23,6 @@
 #include "Tools.h"
 #include "Plotter.h"
 
-
 #define PLOTTER_CURVE_ID 0
 #define MAX_PIXEL 2048
 #define MODE_CONTROLLER 1
