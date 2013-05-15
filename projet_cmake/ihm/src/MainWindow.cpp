@@ -164,14 +164,15 @@ MainWindow::MainWindow() {
 
 	this->log("Init the programm");
 
-	/*test*/
-	/*int pixel = 1333;
+	//test
+	/*
+	int pixel = 1333;
 	double sigma = 20;
-	float64 data[MAX_PIXEL];
-	for (int i=0; i<MAX_PIXEL; i+=1) {
+	float64 data[NB_PIXEL];
+	for (int i=0; i<NB_PIXEL; i+=1) {
 		data[i] = 100*(1/(sigma*sqrt(2*M_PI)))*exp(-(pow((double)i-pixel+1, 2))/(2*pow(sigma, 2)));
 	}
-	this->receiveData(data);
+	this->receiveData(data, NB_PIXEL);
 	this->receivePixel(pixel);
 	*/
 
@@ -307,6 +308,7 @@ void MainWindow::receiveData(float64* data, int count) {
 		acq_data.append(QPointF(i+1, data[i]));
 	}
 	plotter->setCurveData(PLOTTER_CURVE_ID, acq_data);
+	this->log("Acquisition method : receive "+QString::number(count)+" samples");
 	if (acq_data.size() >= NB_PIXEL) {
 		acq_data.erase(acq_data.begin(), acq_data.end());
 		int pixel = 0;
