@@ -3,23 +3,11 @@
 #include "Acquisitor.h"
 
 
-using namespace std;
-
-
 MainWindow::MainWindow() {
 
 	// create a window  
 	this->setWindowTitle("PolyTelemetre");
 	this->resize(800,400);
-
-	/*
-	caseCheckBox = new QCheckBox(tr("Match &case"));
-	backwardCheckBox = new QCheckBox(tr("Search &backward"));
-	findButton = new QPushButton(tr("&Find"));
-	findButton->setDefault(true);
-	findButton->setEnabled(false);
-	closeButton = new QPushButton(tr("Close"));
-	*/
 
 	// Configuration - Focus
 	QLabel *conf_label_focus = new QLabel(tr("Foyer (mm) :"));
@@ -83,7 +71,7 @@ MainWindow::MainWindow() {
 
 	// Acquisition - Plotter
 	plotter = new Plotter;
-	plotter->setPlotSettings(PlotSettings(1,MAX_PIXEL,-2,2));
+	plotter->setPlotSettings(PlotSettings(1,NB_PIXEL,-2,2));
 
 	// Acquisition - Layout (distance, plotter)
 	QVBoxLayout *acq_layout = new QVBoxLayout;
@@ -177,15 +165,19 @@ MainWindow::MainWindow() {
 
 	this->log("Init the programm");
 
-	/*test*/
+	//test
+	/*
 	int pixel = 1333;
 	double sigma = 20;
-	float64 data[MAX_PIXEL];
-	for (int i=0; i<MAX_PIXEL; i+=1) {
+	float64 data[NB_PIXEL];
+	for (int i=0; i<NB_PIXEL; i+=1) {
 		data[i] = 100*(1/(sigma*sqrt(2*M_PI)))*exp(-(pow((double)i-pixel+1, 2))/(2*pow(sigma, 2)));
 	}
-	this->receiveData(data);
+	this->receiveData(data, NB_PIXEL);
 	this->receivePixel(pixel);
+	*/
+
+	this->acquisitor->init();
 	
 	// Show the window
 	this->show();
@@ -207,6 +199,10 @@ MainWindow::~MainWindow() {
 	if (ctrl_ports != NULL) {
 		delete(ctrl_ports);
 		ctrl_ports = NULL;
+	}
+	if (ctrl_edit_pixel != NULL) {
+		delete(ctrl_edit_pixel);
+		ctrl_edit_pixel = NULL;
 	}
 	if (acq_edit_distance != NULL) {
 		delete(acq_edit_distance);
@@ -250,17 +246,26 @@ void MainWindow::searchPorts() {
 			ports_found.append(str);
 
 		}
-	    	
 
-	
+ 	#elif WIN32
+		/*TCHAR buf[65535];
+		long len = QueryDosDevice( 0, buf, 65535);
+		this->log(buf);
+		for (long n=0; n<len; n++) {
+			// if found "COM", then add number to list
+			if (_strnicmp(&buf[n], "COM", 3) == 0) {
+				ports_found.append(&buf[n+3]);
+			}
+			// find next null pointer
+			while (buf[n] != '\0') {
+				n++;
+			}
+		}*/
+		ports_found.append("COM1");
+		ports_found.append("COM2");
+		ports_found.append("COM3");
+		ports_found.append("COM4");
  	#else
-
-
-		ports_found.append("USB1");
-		ports_found.append("USB2");
-		ports_found.append("USB3");
-		ports_found.append("USB4");
-		ports_found.append("CD");
 
 	#endif
 
@@ -310,10 +315,6 @@ void MainWindow::selectedControllerPort(int selected) {
 	}
 }
 
-void MainWindow::drawPlotter() {
-  plotter->setCurveData(PLOTTER_CURVE_ID, acq_data);
-}
-
 void MainWindow::updateDistance(int mode, QString dist) {
 	switch(mode) {
 		case MODE_ACQUISITION: {
@@ -327,29 +328,31 @@ void MainWindow::updateDistance(int mode, QString dist) {
 	}
 }
 
-void MainWindow::receiveData(float64* data) {
-	#ifdef VERBOSE
-	this->log("Acquisition : receive data");
-	#endif
-	acq_data.erase(acq_data.begin(), acq_data.end());
-	plotter->clearCurve(PLOTTER_CURVE_ID);
-	for (int i=0; i<MAX_PIXEL; i+=1) {
+void MainWindow::receiveData(float64* data, int count) {
+	if (acq_data.size() == 0) {
+		plotter->clearCurve(PLOTTER_CURVE_ID);
+	}
+	for (int i=0; i<count; i+=1) {
 		acq_data.append(QPointF(i+1, data[i]));
 	}
-	this->drawPlotter();
-	int pixel = 0;
-	QString dist = "NC";
-	pixel = this->calculator->getPixel(data);
-	#ifdef VERBOSE
-	this->log("Acquisition : pixel calculated ("+QString::number(pixel)+")");
-	#endif
-	dist = this->calculator->getDist(pixel);
-	this->updateDistance(MODE_ACQUISITION, dist);
+	plotter->setCurveData(PLOTTER_CURVE_ID, acq_data);
+	this->log("Acquisition method : receive "+QString::number(count)+" samples");
+	if (acq_data.size() >= NB_PIXEL) {
+		acq_data.erase(acq_data.begin(), acq_data.end());
+		int pixel = 0;
+		QString dist = "NC";
+		pixel = this->calculator->getPixel(data);
+		#ifdef VERBOSE
+		this->log("Acquisition method : pixel calculated ("+QString::number(pixel)+")");
+		#endif
+		dist = this->calculator->getDist(pixel);
+		this->updateDistance(MODE_ACQUISITION, dist);
+	}
 }
 
 void MainWindow::receivePixel(int pixel) {
 	#ifdef VERBOSE
-	this->log("Microcontroller : receive pixel ("+QString::number(pixel)+")");
+	this->log("Microcontroller method : receive pixel ("+QString::number(pixel)+")");
 	#endif
 	QString dist = "NC";
 	this->ctrl_edit_pixel->clear();
