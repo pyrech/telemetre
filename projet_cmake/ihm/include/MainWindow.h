@@ -22,6 +22,9 @@
 #include <sstream>
 #include <boost/asio/serial_port.hpp> 
 #include <boost/asio.hpp> 
+#include <pthread.h>
+#include <ctime>
+#include "SimpleSerial.h"
 #include "Tools.h"
 #include "Plotter.h"
 
