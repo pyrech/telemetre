@@ -13,9 +13,8 @@
 #endif
 
 #define ACQ_CALLBACK_EVERY_N_SAMPLE 50
-#define ACQ_DEVICE "Dev3"
-#define ACQ_CANAL_SIGNAL ACQ_DEVICE "/ai0"
-#define ACQ_CANAL_TRIGGER ACQ_DEVICE "/ai5"
+#define ACQ_CANAL_SIGNAL "/ai0"
+#define ACQ_CANAL_TRIGGER "/ai5"
 
 typedef double float64;
 
@@ -30,7 +29,7 @@ private:
 
 public:
 	Acquisitor(MainWindow *_parent);
-	void init();
+	void init(QString device);
 	void cleanup();
 	void log(QString msg);
 };

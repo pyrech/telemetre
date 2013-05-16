@@ -19,7 +19,7 @@ void Acquisitor::cleanup() {
 	}
 }
 
-void Acquisitor::init() {
+void Acquisitor::init(QString device) {
     #ifdef WIN32
 	int32       error=0;
 	char        errBuff[2048]={'\0'};
@@ -28,7 +28,7 @@ void Acquisitor::init() {
 	// DAQmx Configure Code
 	/*********************************************/
 	DAQmxErrChk (DAQmxCreateTask("", &taskHandle));
-	DAQmxErrChk (DAQmxCreateAIVoltageChan(taskHandle, ACQ_CANAL_SIGNAL, "", DAQmx_Val_RSE, -10.0, 10.0, DAQmx_Val_Volts, NULL));
+	DAQmxErrChk (DAQmxCreateAIVoltageChan(taskHandle, QString(device+ACQ_CANAL_SIGNAL).toStdString().c_str(), "", DAQmx_Val_RSE, -10.0, 10.0, DAQmx_Val_Volts, NULL));
 	DAQmxErrChk (DAQmxCfgSampClkTiming(taskHandle, "", 1000.0, DAQmx_Val_Rising, DAQmx_Val_ContSamps, NB_PIXEL));
 	
 	DAQmxErrChk (DAQmxRegisterEveryNSamplesEvent(taskHandle, DAQmx_Val_Acquired_Into_Buffer, ACQ_CALLBACK_EVERY_N_SAMPLE, 0, everyNCallback, NULL));
