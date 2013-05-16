@@ -2,11 +2,9 @@
 #include "Calculator.h"
 #include "Acquisitor.h"
 
-#ifdef WIN32
-#include <stdio.h>
-#include <windows.h>
-#include <string.h>
-#endif
+
+using namespace std;
+
 
 MainWindow::MainWindow() {
 
@@ -233,44 +231,59 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::searchPorts() {
+
+	
+
 	#ifdef __APPLE__
-		std::string ls = Tools::GetStdoutFromCommand("ls /dev/cu.*");
 
-		std::istringstream iss(ls);
-		std::vector<std::string> tokens;
-		std::copy(std::istream_iterator<std::string>(iss),
-	         std::istream_iterator<std::string>(),
-	         std::back_inserter<std::vector<std::string> >(tokens));
+		string ls = Tools::GetStdoutFromCommand("ls /dev/cu.*");
 
-		for (std::vector<std::string>::iterator it = tokens.begin() ; it != tokens.end(); ++it){
+		istringstream iss(ls);
+		vector<string> tokens;
+		copy(istream_iterator<string>(iss),
+	         istream_iterator<string>(),
+	         back_inserter<vector<string> >(tokens));
+
+		for (std::vector<string>::iterator it = tokens.begin() ; it != tokens.end(); ++it){
 
 			QString str((*it).c_str()); 
 			ports_found.append(str);
 
 		}
- 	#elif WIN32
-		/*for (int i=1; i<255; i++) {
-			wchar_t* str = _T("\\\\.\\COM"+i);
+	    	
 
-			// try to open port
-			bool result = false;
-			
-			HANDLE handle = ::CreateFile(str, GENERIC_READ | GENERIC_WRITE, 0, 0, OPEN_EXISTING, 0, 0 );
-			
-			if (handle == INVALID_HANDLE_VALUE)
-			continue;
-
-			CloseHandle( handle );
-  		
-			ports_found.append("COM"+i);
-		}*/
+	
  	#else
+
+
 		ports_found.append("USB1");
 		ports_found.append("USB2");
 		ports_found.append("USB3");
 		ports_found.append("USB4");
 		ports_found.append("CD");
+
 	#endif
+
+
+	// https://groups.google.com/forum/?fromgroups=#!topic/boost-list/0RpVAVSTQXQ
+
+	// http://www.codeguru.com/cpp/w-p/system/hardwareinformation/article.php/c5721/Determining-What-Serial-Ports-Are-Available-on-a-Windows-Machine.htm
+
+	// http://qt-project.org/wiki/QtSerialPort
+
+    /*
+    foreach (QextPortInfo info, QextSerialEnumerator::getPorts()) {
+		
+		ports_found.append(info.portName);
+
+        std::cout << "port name:"       << info.portName.toStdString();
+        std::cout << "friendly name:"   << info.friendName.toStdString();
+        std::cout << "physical name:"   << info.physName.toStdString();
+        std::cout << "enumerator name:" << info.enumName.toStdString();
+        std::cout << "vendor ID:"       << info.vendorID;
+        std::cout << "product ID:"      << info.productID;
+	}
+	*/
 }
 
 void MainWindow::updatePortController(QString &text) {
@@ -294,7 +307,6 @@ void MainWindow::selectedControllerPort(int selected) {
 	else {
 		// TODO
 		this->log("Change port of microcontroller for "+ctrl_ports->itemText(selected));
-		this->log(ctrl_ports->currentText());
 	}
 }
 

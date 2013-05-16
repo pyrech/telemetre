@@ -20,6 +20,8 @@
 #include <stdlib.h>
 #include <vector>
 #include <sstream>
+#include <boost/asio/serial_port.hpp> 
+#include <boost/asio.hpp> 
 #include "Tools.h"
 #include "Plotter.h"
 
