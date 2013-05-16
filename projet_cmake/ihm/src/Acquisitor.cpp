@@ -1,12 +1,12 @@
 #include "Acquisitor.h"
 
 #ifdef WIN32
-Acquisitor* acquisitor_instance = NULL;
+//Acquisitor* acquisitor_instance = NULL;
 
 Acquisitor::Acquisitor(MainWindow *_parent)
 : parent(_parent)
 {
-	acquisitor_instance = this;
+	//acquisitor_instance = this;
 }
 
 void Acquisitor::cleanup() {
@@ -29,17 +29,16 @@ void Acquisitor::init(QString device) {
 	/*********************************************/
 	DAQmxErrChk (DAQmxCreateTask("", &taskHandle));
 	DAQmxErrChk (DAQmxCreateAIVoltageChan(taskHandle, QString(device+ACQ_CANAL_SIGNAL).toStdString().c_str(), "", DAQmx_Val_RSE, -10.0, 10.0, DAQmx_Val_Volts, NULL));
-	DAQmxErrChk (DAQmxCfgSampClkTiming(taskHandle, "", 1000.0, DAQmx_Val_Rising, DAQmx_Val_ContSamps, NB_PIXEL));
+	DAQmxErrChk (DAQmxCfgSampClkTiming(taskHandle, "", 7000, DAQmx_Val_Rising, DAQmx_Val_FiniteSamps, NB_PIXEL));
 	
-	DAQmxErrChk (DAQmxRegisterEveryNSamplesEvent(taskHandle, DAQmx_Val_Acquired_Into_Buffer, ACQ_CALLBACK_EVERY_N_SAMPLE, 0, everyNCallback, NULL));
-	DAQmxErrChk (DAQmxRegisterDoneEvent(taskHandle, 0, doneCallback, NULL));
+	//DAQmxErrChk (DAQmxRegisterEveryNSamplesEvent(taskHandle, DAQmx_Val_Acquired_Into_Buffer, ACQ_CALLBACK_EVERY_N_SAMPLE, 0, everyNCallback, NULL));
+	//DAQmxErrChk (DAQmxRegisterDoneEvent(taskHandle, 0, doneCallback, NULL));
 
 	//DAQmxCfgDigEdgeStartTrig(taskHandle, ACQ_CANAL_TRIGGER, startEdge);  
 
 	/*********************************************/
 	// DAQmx Start Code
 	/*********************************************/
-	DAQmxErrChk (DAQmxStartTask(taskHandle));
 
 Error:
 	if( DAQmxFailed(error) )
@@ -56,10 +55,10 @@ Error:
 }
 
 void Acquisitor::log(QString msg) {
-	this->parent->log("[Acquisitor] "+msg);
+	//this->parent->log("[Acquisitor] "+msg);
 }
 
-int32 CVICALLBACK everyNCallback(TaskHandle taskHandle, int32 everyNsamplesEventType, uInt32 nSamples, void *callbackData) {
+void Acquisitor::trigger() {
 	int32       error=0;
 	char        errBuff[2048]={'\0'};
 	static int  totalRead=0;
@@ -70,27 +69,28 @@ int32 CVICALLBACK everyNCallback(TaskHandle taskHandle, int32 everyNsamplesEvent
 	// DAQmx Read Code
 	/*********************************************/
 	//DAQmx_Val_GroupByChannel ou DAQmx_Val_GroupByScanNumber
+	DAQmxErrChk (DAQmxStartTask(taskHandle));
 	DAQmxErrChk (DAQmxReadAnalogF64(taskHandle, NB_PIXEL, 10.0, DAQmx_Val_GroupByChannel, data, NB_PIXEL, &read, NULL));
+	DAQmxStopTask(taskHandle);
 	
 	if(read > 0) {
 		#ifdef VERBOSE
-		acquisitor_instance->log("receive "+QString::number(read)+" samples");
-		acquisitor_instance->log("total samples received: "+QString::number(totalRead+=read));
+		this->log("receive "+QString::number(read)+" samples");
+		//this->log("total samples received: "+QString::number(totalRead+=read));
 		#endif
-		acquisitor_instance->parent->receiveData(data, read);
+		this->parent->receiveData(data, read);
 	}
 
 Error:
 	if( DAQmxFailed(error) ) {
 		DAQmxGetExtendedErrorInfo(errBuff,2048);
-		acquisitor_instance->cleanup();
+		this->cleanup();
 		QString str = "DAQmx Error: %1";
 		str = str.arg(errBuff);
-		acquisitor_instance->log(str);
+		this->log(str);
 	}
-	return 0;
 }
-
+/*
 int32 CVICALLBACK doneCallback(TaskHandle taskHandle, int32 status, void *callbackData) {
 	int32   error=0;
 	char    errBuff[2048]={'\0'};
@@ -106,6 +106,6 @@ Error:
 		acquisitor_instance->log(str);
 	}
 	return 0;
-}
+}*/
 
 #endif

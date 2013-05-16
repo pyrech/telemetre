@@ -67,6 +67,8 @@ private:
 	Acquisitor *acquisitor;
 	QVector<QPointF> acq_data;
 
+	QTimer* timer;
+
     void updatePortController(QString &text);
 	void updateDistance(int mode, QString dist);
 

@@ -16,25 +16,37 @@ int Calculator::getPixel(float64* data) {
 void Calculator::detectPic(float64* data, int &start, int &end) {
 	start = 0;
 	end = 0;
-	float64 max_signal = maxValue(data);
+	float64 min = 10;
+	int pixel = 0;
+	for(int i=0; i<NB_PIXEL; i++) {
+		if (data[i] < min) {
+			min = data[i];
+			pixel = i;
+		}
+	}
+	start = pixel;
+	end = pixel;
+	return;
+	// No longer use the pic center
+	float64 min_signal = minValue(data);
 	// If max is not high enough, there must be not relevant pic to detect
-	if (max_signal < MIN_PIC_VALUE) {
-		log("Pic to low ("+QString::number(max_signal)+")");
+	if (min_signal < MIN_PIC_VALUE) {
+		log("Pic not enough low ("+QString::number(min_signal)+")");
 		return;
 	}
 	// Threshold which determinate where the pic starts and ends
-	float64 threshold = max_signal*(100-THRESHOLD_PIC_PERCENT)/100;
+	float64 threshold = min_signal*(100-THRESHOLD_PIC_PERCENT)/100;
 	for(int i=0; i<(NB_PIXEL-1); i++) {
 		// Search for start if we haven't find it yet
-		if (start == 0 && end == 0 && data[i] > threshold) {
+		if (start == 0 && end == 0 && data[i] < threshold) {
 			start = i+1;
 		}
 		// Search for end if start found and end not yet found
-		if (start != 0 && end == 0 && data[i+1] < threshold) {
+		if (start != 0 && end == 0 && data[i+1] > threshold) {
 			end = i+1;
 		}
 		// If another pics, we can't know which is right
-		if (start != 0 && end != 0 && data[i+1] > threshold) {
+		if (start != 0 && end != 0 && data[i+1] < threshold) {
 			start = 0;
 			end = 0;
 			log("Many pics");
@@ -43,14 +55,14 @@ void Calculator::detectPic(float64* data, int &start, int &end) {
 	}
 }
 
-float64 Calculator::maxValue(float64* data) {
-	float64 max = 0;
+float64 Calculator::minValue(float64* data) {
+	float64 min = 10;
 	for(int i=0; i<NB_PIXEL; i++) {
-		if (data[i] > max) {
-			max = data[i];
+		if (data[i] < min) {
+			min = data[i];
 		}
 	}
-	return max;
+	return min;
 }
 
 int Calculator::round(double d) {

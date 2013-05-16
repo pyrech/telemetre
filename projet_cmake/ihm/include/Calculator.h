@@ -15,7 +15,7 @@ private:
 	MainWindow *parent;
     QString distWithUnit(double dist, short precision, QString unit);
 	void detectPic(float64* data, int &start, int &end);
-	float64 maxValue(float64* data);
+	float64 minValue(float64* data);
 	void log(QString msg);
 
 public:
