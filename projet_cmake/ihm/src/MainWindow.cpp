@@ -3,14 +3,17 @@
 #include "Acquisitor.h"
 
 
+using namespace std;
+
+
 //MainWindow * telemetreWindow
 static void * start_serial_communication(void *p_data){
 
     //SimpleSerial serial("/dev/cu.usbserial-FTFO53KG",9200);
-    while(1){
+    //while(1){
 
 
-        cout<<"ok"<<endl;
+        std::cout<<"ok"<<endl;
         usleep(1000);
 
        /* try {
@@ -22,7 +25,7 @@ static void * start_serial_communication(void *p_data){
         {
             cout<<"Error: "<<e.what()<<endl;
         }*/
-    }
+    //}
 }
 
 MainWindow::MainWindow() {
