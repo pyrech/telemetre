@@ -19,22 +19,24 @@
 typedef double float64;
 
 class Acquisitor : public QObject {
+	#ifdef WIN32
+		private:
+			TaskHandle taskHandle;
+			MainWindow *parent;
+			void trigger();
+			friend int32 CVICALLBACK everyNCallback(TaskHandle taskHandle, int32 everyNsamplesEventType, uInt32 nSamples, void *callbackData);
+			friend int32 CVICALLBACK doneCallback(TaskHandle taskHandle, int32 status, void *callbackData);
 
-private:
-	TaskHandle taskHandle;
-	MainWindow *parent;
-	void trigger();
-	friend int32 CVICALLBACK everyNCallback(TaskHandle taskHandle, int32 everyNsamplesEventType, uInt32 nSamples, void *callbackData);
-	friend int32 CVICALLBACK doneCallback(TaskHandle taskHandle, int32 status, void *callbackData);
-
-public:
-	Acquisitor(MainWindow *_parent);
-	void init(QString device);
-	void cleanup();
-	void log(QString msg);
+		public:
+			Acquisitor(MainWindow *_parent);
+			void init(QString device);
+			void cleanup();
+			void log(QString msg);
+	#endif
 };
 
-int32 CVICALLBACK everyNCallback(TaskHandle taskHandle, int32 everyNsamplesEventType, uInt32 nSamples, void *callbackData);
-int32 CVICALLBACK doneCallback(TaskHandle taskHandle, int32 status, void *callbackData);
-
+#ifdef WIN32
+	int32 CVICALLBACK everyNCallback(TaskHandle taskHandle, int32 everyNsamplesEventType, uInt32 nSamples, void *callbackData);
+	int32 CVICALLBACK doneCallback(TaskHandle taskHandle, int32 status, void *callbackData);
+#endif
 #endif 

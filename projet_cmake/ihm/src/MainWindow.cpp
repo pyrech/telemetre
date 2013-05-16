@@ -308,14 +308,16 @@ void MainWindow::selectedControllerPort(int selected) {
 }
 
 void MainWindow::selectedAcquisitionDevice(int selected) {
-	this->acquisitor->cleanup();
-	if (selected == 0) {
-		this->log("No device selected for acquisition");
-	}
-	else {
-		this->log("Change device of acquistion for "+acq_devices->itemText(selected));
-		this->acquisitor->init(acq_devices->itemText(selected));
-	}
+	#ifdef WIN32
+		this->acquisitor->cleanup();
+		if (selected == 0) {
+			this->log("No device selected for acquisition");
+		}
+		else {
+			this->log("Change device of acquistion for "+acq_devices->itemText(selected));
+			this->acquisitor->init(acq_devices->itemText(selected));
+		}
+	#endif
 }
 
 void MainWindow::updateDistance(int mode, QString dist) {

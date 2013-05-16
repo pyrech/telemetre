@@ -1,5 +1,6 @@
 #include "Acquisitor.h"
 
+#ifdef WIN32
 Acquisitor* acquisitor_instance = NULL;
 
 Acquisitor::Acquisitor(MainWindow *_parent)
@@ -20,7 +21,6 @@ void Acquisitor::cleanup() {
 }
 
 void Acquisitor::init(QString device) {
-    #ifdef WIN32
 	int32       error=0;
 	char        errBuff[2048]={'\0'};
 
@@ -52,7 +52,6 @@ Error:
 		str = str.arg(errBuff);
 		this->log(str);
 	}
-	#endif
 	return;
 }
 
@@ -108,3 +107,5 @@ Error:
 	}
 	return 0;
 }
+
+#endif
