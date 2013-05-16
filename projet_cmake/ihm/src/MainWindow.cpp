@@ -80,6 +80,16 @@ MainWindow::MainWindow() {
 	QGroupBox *conf_group_box = new QGroupBox(tr("Configuration"));
 	conf_group_box->setLayout(conf_layout);
 
+	// Acquisition - devices
+	QLabel *acq_label_devices = new QLabel(tr("Périphériques :"));
+	acq_devices = new QComboBox(this);
+	acq_label_devices->setBuddy(acq_devices);
+	
+	// Acquisition - Top layout (devices)
+	QHBoxLayout *acq_top_devices_layout = new QHBoxLayout;
+	acq_top_devices_layout->addWidget(acq_label_devices);
+	acq_top_devices_layout->addWidget(acq_devices);
+
 	// Acquisition - distance
 	QLabel *acq_label_distance = new QLabel(tr("Distance :"));
 	acq_edit_distance = new QLineEdit;
@@ -98,6 +108,7 @@ MainWindow::MainWindow() {
 	// Acquisition - Layout (distance, plotter)
 	QVBoxLayout *acq_layout = new QVBoxLayout;
     acq_layout->setAlignment(Qt::AlignTop);
+	acq_layout->addLayout(acq_top_devices_layout);
 	acq_layout->addLayout(acq_top_dist_layout);
 	acq_layout->addStretch();
 	acq_layout->addWidget(plotter);
@@ -173,6 +184,12 @@ MainWindow::MainWindow() {
 	main_layout->addWidget(log_group_box);
 	this->setLayout(main_layout);
 
+	acq_devices->clear();
+	acq_devices->addItem("");
+	acq_devices->addItem("Dev1");
+	acq_devices->addItem("Dev2");
+	acq_devices->addItem("Dev3");
+
 	// Update ports list
 	this->searchPorts();
 	QString default_port = "";
@@ -180,6 +197,7 @@ MainWindow::MainWindow() {
 
 	// Add signal and slot
 	QObject::connect(ctrl_ports, SIGNAL(currentIndexChanged(int)), this, SLOT(selectedControllerPort(int)));
+	QObject::connect(acq_devices, SIGNAL(currentIndexChanged(int)), this, SLOT(selectedAcquisitionDevice(int)));
 
 	// Init the calculator and acquisitor
 	this->calculator = new Calculator(this);
@@ -198,8 +216,6 @@ MainWindow::MainWindow() {
 	this->receiveData(data, NB_PIXEL);
 	this->receivePixel(pixel);
 	*/
-
-	this->acquisitor->init();
 	
 	// Show the window
 	this->show();
@@ -221,6 +237,10 @@ MainWindow::~MainWindow() {
 	if (ctrl_ports != NULL) {
 		delete(ctrl_ports);
 		ctrl_ports = NULL;
+	}
+	if (acq_devices != NULL) {
+		delete(acq_devices);
+		acq_devices = NULL;
 	}
 	if (ctrl_edit_pixel != NULL) {
 		delete(ctrl_edit_pixel);
@@ -339,6 +359,17 @@ void MainWindow::selectedControllerPort(int selected) {
     pthread_t thSerialCom;
     pthread_create (&thSerialCom, NULL, start_serial_communication, NULL);
 
+}
+
+void MainWindow::selectedAcquisitionDevice(int selected) {
+	this->acquisitor->cleanup();
+	if (selected == 0) {
+		this->log("No device selected for acquisition");
+	}
+	else {
+		this->log("Change device of acquistion for "+acq_devices->itemText(selected));
+		this->acquisitor->init(acq_devices->itemText(selected));
+	}
 }
 
 void MainWindow::updateDistance(int mode, QString dist) {

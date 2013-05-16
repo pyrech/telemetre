@@ -62,6 +62,7 @@ private:
 	QLineEdit *conf_edit_pixel;
 	QList<QString> ports_found;
 	QComboBox *ctrl_ports;
+	QComboBox *acq_devices;
 	QLineEdit *ctrl_edit_pixel;
 	QLineEdit *acq_edit_distance;
 	QLineEdit *ctrl_edit_distance;
@@ -87,7 +88,7 @@ public:
 	
 public slots:
 	void selectedControllerPort(int selected);
-
+	void selectedAcquisitionDevice(int selected);
 };
 
 #endif 
