@@ -52,7 +52,7 @@ public:
         for(;;)
         {
             asio::read(serial,asio::buffer(&c,1));
-            switch(c)
+           switch(c)
             {
                 case '\r':
                     break;
@@ -61,6 +61,9 @@ public:
                 default:
                     result+=c;
             }
+        
+
+
         }
     }
 

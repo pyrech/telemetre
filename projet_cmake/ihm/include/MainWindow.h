@@ -74,6 +74,12 @@ private:
 
     void updatePortController(QString &text);
 	void updateDistance(int mode, QString dist);
+	void * start_serial_communication();//void *arguments
+
+    static void *start_serial_communication_helper(void *context)
+    {
+        return ((MainWindow *)context)->start_serial_communication();
+    }
 
 public:
 	MainWindow();

@@ -5,27 +5,25 @@
 
 using namespace std;
 
-
+//void *p_data
 //MainWindow * telemetreWindow
-static void * start_serial_communication(void *p_data){
+void * MainWindow::start_serial_communication(){
 
-    //SimpleSerial serial("/dev/cu.usbserial-FTFO53KG",9200);
-    //while(1){
+	std::string str_port(this->ctrl_ports->currentText().toStdString());
+	cout<<str_port<<endl;
+    SimpleSerial serial(str_port,9200);
+    while(1){
 
+       try {
 
-        std::cout<<"ok"<<endl;
-        usleep(1000);
-
-       /* try {
-
-            telemetreWindow->receivePixel(atoi(serial.readLine().c_str()));
+            this->receivePixel(atoi(serial.readLine().c_str()));//
             cout<<serial.readLine()<<endl;
         }
         catch(boost::system::system_error& e)
         {
             cout<<"Error: "<<e.what()<<endl;
-        }*/
-    //}
+        }
+    }
 }
 
 MainWindow::MainWindow() {
@@ -204,8 +202,11 @@ MainWindow::MainWindow() {
 
 	// Init the calculator and acquisitor
 	this->calculator = new Calculator(this);
-	this->acquisitor = new Acquisitor(this);
 
+	#ifdef WIN32
+	this->acquisitor = new Acquisitor(this);
+	#endif
+	
 	this->log("Init the programm");
 
 	//test
@@ -349,6 +350,7 @@ void MainWindow::updatePortController(QString &text) {
 }
 
 void MainWindow::selectedControllerPort(int selected) {
+	
 	if (selected == 0) {
 		// disable some fields ?
 		// disable the qextserialport ?
@@ -357,10 +359,14 @@ void MainWindow::selectedControllerPort(int selected) {
 	else {
 		// TODO
 		this->log("Change port of microcontroller for "+ctrl_ports->itemText(selected));
+		
+		QString str = ctrl_ports->itemText(selected);
+		std::string sstr = str.toStdString();
+    	pthread_t thSerialCom;
+    	pthread_create (&thSerialCom, NULL, start_serial_communication_helper, this);
 	}
 
-    pthread_t thSerialCom;
-    pthread_create (&thSerialCom, NULL, start_serial_communication, NULL);
+	
 
 }
 

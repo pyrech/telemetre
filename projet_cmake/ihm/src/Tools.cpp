@@ -17,7 +17,7 @@ std::string Tools::GetStdoutFromCommand(std::string cmd){
 			pclose(stream);
 		}
 		return data;
-	#endif;
+	#endif
 	return "";
 }
 
