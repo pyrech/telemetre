@@ -104,7 +104,7 @@ MainWindow::MainWindow() {
 
 	// Acquisition - Plotter
 	plotter = new Plotter;
-	plotter->setPlotSettings(PlotSettings(1,NB_PIXEL,-2,2));
+	plotter->setPlotSettings(PlotSettings(1,NB_PIXEL,1,3));
 
 	// Acquisition - Layout (distance, plotter)
 	QVBoxLayout *acq_layout = new QVBoxLayout;
@@ -206,7 +206,12 @@ MainWindow::MainWindow() {
 	#ifdef WIN32
 	this->acquisitor = new Acquisitor(this);
 	#endif
-	
+
+	timer = new QTimer(this);
+	timer->setInterval(500);
+	QObject::connect(timer, SIGNAL(timeout()), this->acquisitor, SLOT(trigger()));
+
+
 	this->log("Init the programm");
 
 	//test
@@ -269,6 +274,10 @@ MainWindow::~MainWindow() {
 	if (calculator != NULL) {
 		delete(calculator);
 		calculator = NULL;
+	}
+	if (timer != NULL) {
+		delete(timer);
+		timer = NULL;
 	}
 }
 
@@ -373,12 +382,15 @@ void MainWindow::selectedControllerPort(int selected) {
 void MainWindow::selectedAcquisitionDevice(int selected) {
 	#ifdef WIN32
 		this->acquisitor->cleanup();
+		timer->stop();
 		if (selected == 0) {
 			this->log("No device selected for acquisition");
 		}
 		else {
 			this->log("Change device of acquistion for "+acq_devices->itemText(selected));
 			this->acquisitor->init(acq_devices->itemText(selected));
+			
+			timer->start();
 		}
 	#endif
 }
@@ -397,13 +409,19 @@ void MainWindow::updateDistance(int mode, QString dist) {
 }
 
 void MainWindow::receiveData(float64* data, int count) {
-	if (acq_data.size() == 0) {
+	int data_size = acq_data.size();
+	if (data_size == 0) {
 		plotter->clearCurve(PLOTTER_CURVE_ID);
 	}
 	for (int i=0; i<count; i+=1) {
-		acq_data.append(QPointF(i+1, data[i]));
+		if (data_size > NB_PIXEL) {
+			break;
+		}
+		acq_data.append(QPointF(data_size+1, data[i]));
+		data_size++;
 	}
 	plotter->setCurveData(PLOTTER_CURVE_ID, acq_data);
+	plotter->repaint();
 	this->log("Acquisition method : receive "+QString::number(count)+" samples");
 	if (acq_data.size() >= NB_PIXEL) {
 		acq_data.erase(acq_data.begin(), acq_data.end());
@@ -411,7 +429,7 @@ void MainWindow::receiveData(float64* data, int count) {
 		QString dist = "NC";
 		pixel = this->calculator->getPixel(data);
 		#ifdef VERBOSE
-		this->log("Acquisition method : pixel calculated ("+QString::number(pixel)+")");
+		//this->log("Acquisition method : pixel calculated ("+QString::number(pixel)+")");
 		#endif
 		dist = this->calculator->getDist(pixel);
 		this->updateDistance(MODE_ACQUISITION, dist);
